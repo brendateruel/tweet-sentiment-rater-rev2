@@ -1,0 +1,90 @@
+﻿* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	margin: 0px auto 0px auto;
+	background-color: #ffffff;
+	font-family: Lucida Sans, Arial, sans-serif;
+}
+
+a {
+	color: #00aced;
+}
+
+p {
+	padding: 2em;
+}
+
+#wrapper {
+	background-color: red;
+}
+
+#header {
+	padding: 10px;
+	background-color: #7b7b7b;
+	height:80px;
+	color: #f4f4f4;
+}
+
+#header #user-login {
+	position:relative;
+	float:right;
+}
+
+#nav {
+	background-color: #c3c3c3;
+}
+
+#content {
+	background-color: #f1f1f1;
+}
+
+#sidebar {
+	background-color: #c3c3c3;
+}
+
+#footer {
+	background-color: #c3c3c3;
+}
+
+#default-friends {
+	margin:10px;
+	color:#d6d6d6;
+	background-color: light-gray;
+}
+
+#negative {
+	margin:10px;
+	color:#d6d6d6;
+	background-color: blue;
+}
+
+#positive {
+	margin:10px;
+	color:#d6d6d6;
+	background-color: green;
+}
+
+#neutral {
+	margin:10px;
+	color:#d6d6d6;
+	background-color: yellow;
+}
+
+#new-friends {
+	background-color: blue;
+	margin:20px;
+}
+
+.new {
+	font-size:6px;
+}
+
+.welcome {
+	text-align:center;
+	color:#8e8e8e;
+	line-height:2em;
+}
+

@@ -19,7 +19,7 @@ if(!empty($_SESSION['username'])){
 	} else {
 			//header('Location: welcome.php'); 
 			//echo "<a href=twitter_login.php>Sign in</a>";
-			header('Location: twitter_login.php');
+			header('Location: login.php');
 		}
 		
 	/*Alchemy API SDK*/ 

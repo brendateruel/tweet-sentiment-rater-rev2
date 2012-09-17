@@ -8,7 +8,7 @@ if(!empty($_GET['oauth_verifier']) && !empty($_SESSION['oauth_token']) && !empty
     // We've got everything we need  
 } else {  
     // Something's missing, go back to square 1  
-    header('Location: twitter_login.php');  
+    header('Location: login.php');  
 }  
 
 // TwitterOAuth instance, with two new parameters we got in twitter_login.php  
@@ -22,7 +22,7 @@ $user_info = $twitteroauth->get('account/verify_credentials');
 
 if(isset($user_info->error)){  
     // Something's wrong, go back to square 1  
-    header('Location: twitter_login.php'); 
+    header('Location: login.php'); 
 } else { 
     // Let's find the user by its ID  
     $query = $mysqli->query("SELECT * FROM users WHERE oauth_provider = 'twitter' AND oauth_uid = ". $user_info->id);  
