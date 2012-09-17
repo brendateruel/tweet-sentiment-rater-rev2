@@ -70,7 +70,6 @@ img {
 }
 
 #default-friends p {
-	padding-top: 15px;
 }
 
 #default-friends img.user-image {
@@ -94,6 +93,7 @@ img {
 #default-friends .latest-tweet {
 	font-size: .7em;
 	width: 75%;
+	padding-bottom: 18px;
 }
 
 #default-friends-subhead {
@@ -103,22 +103,36 @@ img {
 	border-top: 15px solid #00aced;
 }
 
-#negative {
-	padding: 10px;
-	color: #d6d6d6;
-	background-color: blue;
+#default-friends.negative {
+	background-color: #cddadf;
 }
 
-#positive {
-	padding: 10px;
-	color: #d6d6d6;
-	background-color: green;
+#default-friends.negative #rating {
+	color: blue;
+	font-weight: bold;
 }
 
-#neutral {
-	padding: 10px;
-	color: #d6d6d6;
-	background-color: yellow;
+#default-friends.positive {
+	background-color: #aedd9b;
+}
+
+#default-friends.positive #rating {
+	color: green;
+	font-weight: bold;
+}
+
+#default-friends.neutral {
+	background-color: #ebd6a8;
+}
+
+#default-friends.neutral #rating {
+	color: yellow;
+	font-weight: bold;
+}
+
+#default-friends #rating {
+	position: relative;
+	float: right;
 }
 
 #new-friends {

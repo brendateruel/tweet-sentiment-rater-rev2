@@ -122,7 +122,7 @@
 						}
 					echo "</div>";
 					echo "<div class='latest-tweet'>Latest: {$tweet}</div>";
-					echo "</p></div>";
+					echo "</div>";
 			}
 			?>
 	</div>
