@@ -7,7 +7,7 @@ session_start();
 // The TwitterOAuth instance  
 $twitteroauth = new TwitterOAuth($tOauth_apiKey, $tOauth_apiSecret);  
 // Requesting authentication tokens, the parameter is the URL we will be redirected to  
-$request_token = $twitteroauth->getRequestToken('http://localhost/tweet-sentiment-rater-rev/php2/twitter_oauth.php');  
+$request_token = $twitteroauth->getRequestToken('http://brendateruel.com/tweet-sentiment-rater-rev/php2/twitter_oauth.php');  
   
 // Saving them into the session  
 $_SESSION['oauth_token'] = $request_token['oauth_token'];  

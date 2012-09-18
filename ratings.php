@@ -147,9 +147,10 @@
 						}
 			echo "<div id='default-friends' class='{$mood_bg}'>";
 				if(is_null($avg_sentiment_rating)) {
-					echo "<div id='rating'>0</div>";
+					echo "<div id='rating'><img src=images/{$mood_bg}.png />0%</div>";
 					} else {
-						echo "<div id='rating'>{$avg_sentiment_rating}</div>";
+						$percent = $avg_sentiment_rating * 100;
+						echo "<div id='rating'><img src=images/{$mood_bg}.png />{$percent}%</div>";
 						}
 				echo "<img src={$user_image} class=user-image />";
 				echo "<div class='user'>{$user}</div>";

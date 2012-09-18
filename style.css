@@ -92,7 +92,7 @@ img {
 
 #default-friends .latest-tweet {
 	font-size: .7em;
-	width: 75%;
+	width: 70%;
 	padding-bottom: 18px;
 }
 
@@ -108,8 +108,12 @@ img {
 }
 
 #default-friends.negative #rating {
-	color: blue;
+	color: #00aced;
 	font-weight: bold;
+}
+
+#default-friends.negative #rating img {
+	padding: 5px 26px;
 }
 
 #default-friends.positive {
@@ -117,8 +121,12 @@ img {
 }
 
 #default-friends.positive #rating {
-	color: green;
+	color: #3dc905;
 	font-weight: bold;
+}
+
+#default-friends.positive #rating img {
+	margin: 5px 23px;
 }
 
 #default-friends.neutral {
@@ -126,14 +134,25 @@ img {
 }
 
 #default-friends.neutral #rating {
-	color: yellow;
+	color: #ffe787;
 	font-weight: bold;
 }
 
-#default-friends #rating {
-	position: relative;
-	float: right;
+#default-friends.neutral #rating img {
+	padding: 5px 27px;
 }
+
+#default-friends #rating {
+	position: absolute;
+	right: 20px;
+	width: 25%;
+}
+
+#default-friends #rating img {
+	vertical-align: middle;
+}
+
+
 
 #new-friends {
 	padding: 10px;
