@@ -124,7 +124,12 @@
 		/* SHOW FRIENDS WITH SENTIMENT RATINGS */
 		echo "<div id='default-friends-subhead'><h2>FRIENDS</h2></div>";
 
-		if (!($stmt = $mysqli->prepare("SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.user_handle"))) {
+		/* SELECT DISPLAY ORDER */
+		$friends_list_default = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.user_handle";
+		$friends_list_desc = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.avg_sentiment_rating DESC";
+		$friends_list_asc = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.avg_sentiment_rating ASC";
+			
+		if (!($stmt = $mysqli->prepare("{$friends_list_asc}"))) {
 			 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 		}
 		if (!$stmt->execute()) {
