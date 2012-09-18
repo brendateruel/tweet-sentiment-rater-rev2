@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-    <link rel="stylesheet" href="style.css" media="screen" /> 
+    <link rel="stylesheet" href="style.css" media="screen" />
+	<link href='http://fonts.googleapis.com/css?family=Nothing+You+Could+Do' rel='stylesheet' type='text/css'>
 	<title>Welcome - Tweet Sentiment Rater</title>
 </head>
 
@@ -25,7 +26,7 @@
 			$home_timeline = $twitteroauth->get('statuses/home_timeline', array('count' => 500));
 		}
 
-		echo "Happy Meter";
+		echo "<div class='logo'>Happy Meter</div>";
 		echo "<div id='user-login'>";
 		if(!empty($_SESSION['username'])){  
 			echo $session_username;

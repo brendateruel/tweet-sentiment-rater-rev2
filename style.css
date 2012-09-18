@@ -32,6 +32,10 @@ img {
 	color: #f4f4f4;
 }
 
+#header .logo {
+	font-family: 'Nothing You Could DO', cursive;
+}
+
 #header #user-login {
 	position:relative;
 	float:right;
