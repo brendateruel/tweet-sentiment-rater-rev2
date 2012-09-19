@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8" />
     <link rel="stylesheet" href="style.css" media="screen" /> 
+	<link href='http://fonts.googleapis.com/css?family=Homemade+Apple' rel='stylesheet' type='text/css'>
 	<title>Welcome - Tweet Sentiment Rater</title>
 </head>
 
@@ -69,7 +70,7 @@
 
 	<div id="content">
 			<div id="new-friends">
-				<p>NEW FRIENDS:</p>
+				<p>New friends added:</p>
 				<?php
 
 					/* UPDATING NEW FRIENDS AND STATUS UPDATES */
@@ -100,9 +101,9 @@
 			
 			<?php
 			/* ALL FRIENDS */
-			echo "<div id='default-friends-subhead'><h2>FRIENDS</h2></div>";
+			echo "<div id='default-friends-subhead'><h2>Friends</h2></div>";
 			$stmt = $mysqli->stmt_init();
-			if (!($stmt = $mysqli->prepare("SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_temp_timeline}.sentiment_score FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.user_handle"))) {
+			if (!($stmt = $mysqli->prepare("SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_temp_timeline}.sentiment_score, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle WHERE {$new_temp_timeline}.date_time >= SYSDATE() - INTERVAL 1 DAY GROUP BY {$new_friends_table}.user_handle"))) {
 				 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
 			if (!$stmt->execute()) {
@@ -122,7 +123,7 @@
 						echo "<img src=images/new-update.png class=new-marker />";
 						}
 					echo "</div>";
-					echo "<div class='latest-tweet'>Latest: {$tweet}</div>";
+					echo "<div class='latest-tweet'>Latest {$row['date_time']}: {$tweet}</div>";
 					echo "</div>";
 			}
 			?>

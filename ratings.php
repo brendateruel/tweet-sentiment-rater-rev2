@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8" />
     <link rel="stylesheet" href="style.css" media="screen" />
-	<link href='http://fonts.googleapis.com/css?family=Nothing+You+Could+Do' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Homemade+Apple' rel='stylesheet' type='text/css'>
 	<title>Welcome - Tweet Sentiment Rater</title>
 </head>
 
@@ -98,6 +98,9 @@
 				//echo $array_sum;
 				if ($array_sum == 0) {
 					//echo "Average of array: 0";
+					if(!($stmt = $mysqli->query("UPDATE {$new_friends_table} set avg_sentiment_rating='0' WHERE user_handle='{$user}'"))) {
+							 echo "Statement failed: (" . $mysqli->errno . ") " . $mysqli->error;
+						}
 				} else {
 					//echo "sum(a) = " . $array_sum . "\n";
 					$avg_sentiment_rating = average($solution);
@@ -123,14 +126,14 @@
 		*/
 
 		/* SHOW FRIENDS WITH SENTIMENT RATINGS */
-		echo "<div id='default-friends-subhead'><h2>FRIENDS</h2></div>";
+		echo "<div id='default-friends-subhead'><h2>Friends</h2></div>";
 
 		/* SELECT DISPLAY ORDER */
-		$friends_list_default = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.user_handle";
-		$friends_list_desc = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.avg_sentiment_rating DESC";
-		$friends_list_asc = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.avg_sentiment_rating ASC";
+		$friends_list_default = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle WHERE {$new_temp_timeline}.date_time >= SYSDATE() - INTERVAL 1 DAY GROUP BY {$new_friends_table}.user_handle";
+		$friends_list_desc = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.avg_sentiment_rating DESC";
+		$friends_list_asc = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle WHERE {$new_temp_timeline}.date_time >= SYSDATE() - INTERVAL 1 DAY GROUP BY {$new_friends_table}.avg_sentiment_rating ASC";
 			
-		if (!($stmt = $mysqli->prepare("{$friends_list_asc}"))) {
+		if (!($stmt = $mysqli->prepare("{$friends_list_desc}"))) {
 			 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 		}
 		if (!$stmt->execute()) {
@@ -160,7 +163,11 @@
 						}
 				echo "<img src={$user_image} class=user-image />";
 				echo "<div class='user'>{$user}</div>";
-				echo "<div class='latest-tweet'>Latest: {$tweet}</div>";
+				if(strtotime($row['date_time']) >= strtotime('now -24 hours')) {
+					echo "<div class='latest-tweet'>Latest {$row['date_time']}: {$tweet}</div>";
+				} else {
+					echo "<div class='latest-tweet'>No tweets in the last 24 hours.</div>";
+				}
 			echo "</div>";
 		}
 

@@ -62,10 +62,13 @@ while($row = $res->fetch_assoc()) {
 			echo $score . "\n";
 			$score = $mysqli->real_escape_string($score);
 /* Writing sentiment score to timeline table */
-			if(!($stmt3 = $mysqli->query("UPDATE {$new_temp_timeline} set sentiment_score='{$score}' WHERE status_ID='{$b}'"))) {
+			if(!($stmt3 = $mysqli->prepare("UPDATE {$new_temp_timeline} set sentiment_score='{$score}' WHERE status_ID='{$b}'"))) {
 					 echo "Statement failed: (" . $mysqli->errno . ") " . $mysqli->error;
 				}
-		}
+			if (!$stmt3->execute()) {
+				 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
+				}
+			}
 }
 
 if(!($check = $mysqli->prepare("SELECT tweet, status_ID FROM {$new_temp_timeline} WHERE user_handle='{$user}' AND sentiment_score IS NULL"))){  

@@ -33,7 +33,7 @@ img {
 }
 
 #header .logo {
-	font-family: 'Nothing You Could DO', cursive;
+	font-family: 'Homemade Apple', cursive;
 }
 
 #header #user-login {
@@ -102,7 +102,9 @@ img {
 
 #default-friends-subhead {
 	padding: 10px;
+	font-family: 'Homemade Apple', cursive;
 	color: #00aced;
+	text-transform: capitalize;
 	background-color: #dbdbdb;
 	border-top: 15px solid #00aced;
 }
@@ -162,6 +164,7 @@ img {
 	padding: 10px;
 	background-color: #dbdbdb;
 	border-top: 2px solid #ffffff;
+	text-transform: capitalize;
 }
 
 #new-friends img {
