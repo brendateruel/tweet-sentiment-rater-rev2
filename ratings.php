@@ -86,14 +86,14 @@
 		while($row = $res->fetch_assoc()) {
 			set_time_limit(0);
 			$user = $row['user_handle'];	
-			$all = $mysqli->query("SELECT sentiment_score FROM {$new_temp_timeline} WHERE user_handle='{$user}'");
+			$all = $mysqli->query("SELECT sentiment_score FROM {$new_temp_timeline} WHERE user_handle='{$user}' AND {$new_temp_timeline}.date_time >= SYSDATE() - INTERVAL 1 DAY");
 			$row_cnt = $all->num_rows;
 			$solution = array();
 			while ($array = $all->fetch_array(MYSQLI_BOTH)) {
 				$solution[]=$array['sentiment_score'];
 				}
 			//echo $user;
-			if ($row_cnt > 0) {
+			if ($row_cnt >= 0) {
 				$array_sum = array_sum($solution);
 				//echo $array_sum;
 				if ($array_sum == 0) {
@@ -163,6 +163,7 @@
 						}
 				echo "<img src={$user_image} class=user-image />";
 				echo "<div class='user'>{$user}</div>";
+				echo $row['date_time'];
 				if(strtotime($row['date_time']) >= strtotime('now -24 hours')) {
 					echo "<div class='latest-tweet'>Latest {$row['date_time']}: {$tweet}</div>";
 				} else {
