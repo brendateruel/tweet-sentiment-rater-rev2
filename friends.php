@@ -109,21 +109,22 @@
 			if (!$stmt->execute()) {
 				 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
-			$res = $stmt->fetch();
+			$stmt->bind_result($user, $user_image, $tweet, $sentiment_score, $date_time);
+			/*$res = $stmt->fetch();*/
 
-			while($row = $res->fetch_array()) {
-				$user = $row['user_handle'];
+			while($row = $stmt->fetch()) {
+				/*$user = $row['user_handle'];
 				$user_image = $row['user_image_URL'];
-				$tweet = $row['tweet'];
+				$tweet = $row['tweet'];*/
 					echo "<div id='default-friends'>";
 					echo "<img src={$user_image} class=user-image />";
 					echo "<div class='user'>{$user}";
-					$sentiment_score = $row['sentiment_score'];
+					/*$sentiment_score = $row['sentiment_score'];*/
 						if (is_null($sentiment_score)) {
 						echo "<img src=images/new-update.png class=new-marker />";
 						}
 					echo "</div>";
-					echo "<div class='latest-tweet'>Latest {$row['date_time']}: {$tweet}</div>";
+					echo "<div class='latest-tweet'>Latest {$date_time}: {$tweet}</div>";
 					echo "</div>";
 			}
 			?>
