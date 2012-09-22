@@ -41,7 +41,7 @@ $res = $stmt->get_result();
 while($row = $res->fetch_assoc()) {
 	$user = $row['user_handle'];
 /* Selecting each friend's tweets, NEED TO ADD DATE SELECTION? */
-		if(!($stmt2 = $mysqli->prepare("SELECT tweet, status_ID FROM {$new_temp_timeline} WHERE user_handle='{$user}' AND sentiment_score IS NULL"))) {
+		if(!($stmt2 = $mysqli->prepare("SELECT tweet, status_ID FROM {$new_temp_timeline} WHERE user_handle='{$user}' AND sentiment_score IS NULL AND date_time >= SYSDATE() - INTERVAL 1 DAY"))) {
 				 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
 		if (!$stmt2->execute()) {
