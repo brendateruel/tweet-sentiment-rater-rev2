@@ -102,15 +102,16 @@
 			<?php
 			/* ALL FRIENDS */
 			echo "<div id='default-friends-subhead'><h2>Friends</h2></div>";
-			$stmt = $mysqli->stmt_init();
-			if (!($stmt = $mysqli->prepare("SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_temp_timeline}.sentiment_score, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle WHERE {$new_temp_timeline}.date_time >= SYSDATE() - INTERVAL 1 DAY GROUP BY {$new_friends_table}.user_handle"))) {
+			//$stmt = $mysqli->stmt_init();
+			if (!($stmt = $mysqli->prepare("SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_temp_timeline}.sentiment_score, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle WHERE {$new_friends_table}.user_handle = ? GROUP BY {$new_friends_table}.user_handle, {$new_temp_timeline}.date_time DESC ORDER BY {$new_friends_table}.user_handle"))) {
 				 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
+			//$stmt->bind_param('s', $a);
 			if (!$stmt->execute()) {
 				 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
+			//$stmt->bind_result($result);
 			$res = $stmt->get_result();
-
 			while($row = $res->fetch_assoc()) {
 				$user = $row['user_handle'];
 				$user_image = $row['user_image_URL'];
@@ -123,7 +124,12 @@
 						echo "<img src=images/new-update.png class=new-marker />";
 						}
 					echo "</div>";
-					echo "<div class='latest-tweet'>Latest {$row['date_time']}: {$tweet}</div>";
+					echo "<div class='latest-tweet'>Latest ({$row['date_time']}): {$tweet}</div>";
+					/*if(strtotime($row['date_time']) >= strtotime('now -24 hours')) {
+						echo "<div class='latest-tweet'>Latest {$row['date_time']}: {$tweet}</div>";
+						} else {
+								echo "<div class='latest-tweet'>No tweets imported recently within 24 hours.</div>";
+								}*/
 					echo "</div>";
 			}
 			?>
