@@ -32,7 +32,7 @@
 			echo $session_username;
 			} else {
 					//header('Location: welcome.php'); 
-					echo "<a href=twitter_login.php>Sign in</a>";
+					echo "<a href=login.php>Sign in</a>";
 					//header('Location: login.php');
 				}
 		echo "</div>";
@@ -166,7 +166,7 @@
 				if(strtotime($row['date_time']) >= strtotime('now -24 hours')) {
 					echo "<div class='latest-tweet'>Latest {$row['date_time']}: {$tweet}</div>";
 				} else {
-					echo "<div class='latest-tweet'>No tweets in the last 24 hours.</div>";
+					echo "<div class='latest-tweet'>No tweets imported recently within 24 hours.</div>";
 				}
 			echo "</div>";
 		}

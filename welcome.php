@@ -31,7 +31,7 @@
 			echo "Welcome, {$session_username}!";
 			} else {
 					//header('Location: welcome.php'); 
-					echo "<a href=twitter_login.php>Sign in</a>";
+					echo "<a href=login.php>Sign in</a>";
 					//header('Location: login.php');
 				}
 		echo "</div>";
