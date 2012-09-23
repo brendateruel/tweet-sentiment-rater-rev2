@@ -86,11 +86,17 @@
 		while($row = $res->fetch_assoc()) {
 			set_time_limit(0);
 			$user = $row['user_handle'];	
-			$all = $mysqli->query("SELECT sentiment_score FROM {$new_temp_timeline} WHERE user_handle='{$user}' AND {$new_temp_timeline}.date_time >= SYSDATE() - INTERVAL 1 DAY");
-			$row_cnt = $all->num_rows;
+		if (!($stmt = $mysqli->prepare("SELECT sentiment_score FROM {$new_temp_timeline} WHERE user_handle='{$user}' AND {$new_temp_timeline}.date_time >= SYSDATE() - INTERVAL 1 DAY"))) {
+			 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+		}
+		if (!$stmt->execute()) {
+			 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
+		}
+		$stmt->bind_result($score);
+		$row_cnt = $stmt->num_rows;
 			$solution = array();
-			while ($array = $all->fetch_array(MYSQLI_BOTH)) {
-				$solution[]=$array['sentiment_score'];
+			while ($array = $stmt->fetch()) {
+				$solution[]=$score;
 				}
 			//echo $user;
 			if ($row_cnt >= 0) {
