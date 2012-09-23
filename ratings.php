@@ -76,7 +76,6 @@
 			return array_sum($solution)/count($solution) ;
 		}
 			
-		$stmt = $mysqli->stmt_init();
 		if (!($stmt = $mysqli->prepare("SELECT user_handle FROM {$new_friends_table}"))) {
 			 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 		}
@@ -93,12 +92,13 @@
 			if (!$stmt->execute()) {
 				 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
-			$stmt->bind_result($solution);
-			while ($row = $stmt->fetch()) {
-				$solution = array();
-				$row_cnt = $stmt->num_rows;
+			$stmt->bind_result($score);
+			$row_cnt = $stmt->num_rows;
+			$solution = array();
+			while ($array = $stmt->fetch()) {
+				$solution[]=$score;
 				}
-			//echo $user;
+				//echo $user;
 			if ($row_cnt >= 0) {
 				$array_sum = array_sum($solution);
 				//echo $array_sum;
