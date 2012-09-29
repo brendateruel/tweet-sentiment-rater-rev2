@@ -77,7 +77,7 @@ $stmt = $mysqli->stmt_init();
 if(!($check = $mysqli->prepare("SELECT tweet, status_ID FROM {$new_temp_timeline} WHERE user_handle='{$user}' AND sentiment_score IS NULL"))){  
 	echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 }
-$stmt->bind_result($tweet, $status_ID);
+$check->bind_result($tweet, $status_ID);
 if (!$check->execute()) {
 	echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
 }	else {
