@@ -4,6 +4,7 @@
 	<meta charset="utf-8" />
     <link rel="stylesheet" href="style.css" media="screen" />
 	<link href='http://fonts.googleapis.com/css?family=Homemade+Apple' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<title>Welcome - Tweet Sentiment Rater</title>
 </head>
 
@@ -49,7 +50,14 @@
 	
 	<div id="nav">
 		<div id='button'>
-			<a href=sentiment-analysis.php><img src=images/analyze.png /></a>
+			<img src="images/ajax-loader.gif" class="loading" />
+			<a href="sentiment-analysis.php"><img src="images/analyze.png" class="analyze" /></a>
+			<script>
+				$(".analyze").click(function() {
+					$(".analyze").hide();
+					$(".loading").show();
+				});
+			</script>
 		</div>
 	<?php 
 			/* CREATING A NEW TABLE FOR EACH USER */
@@ -135,11 +143,11 @@
 		echo "<div id='default-friends-subhead'><h2>Friends</h2></div>";
 
 		/* SELECT DISPLAY ORDER */
-		$friends_list_default = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle WHERE {$new_temp_timeline}.date_time >= SYSDATE() - INTERVAL 1 DAY GROUP BY {$new_friends_table}.user_handle";
+		$friends_list_default = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.user_handle";
 		$friends_list_desc = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.avg_sentiment_rating DESC";
 		$friends_list_asc = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle WHERE {$new_temp_timeline}.date_time >= SYSDATE() - INTERVAL 1 DAY GROUP BY {$new_friends_table}.avg_sentiment_rating ASC";
 			
-		if (!($stmt = $mysqli->prepare("{$friends_list_desc}"))) {
+		if (!($stmt = $mysqli->prepare("{$friends_list_default}"))) {
 			 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 		}
 		if (!$stmt->execute()) {

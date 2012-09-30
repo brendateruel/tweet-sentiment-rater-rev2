@@ -4,6 +4,7 @@
 	<meta charset="utf-8" />
     <link rel="stylesheet" href="style.css" media="screen" /> 
 	<link href='http://fonts.googleapis.com/css?family=Homemade+Apple' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<title>Welcome - Tweet Sentiment Rater</title>
 </head>
 
@@ -49,7 +50,14 @@
 	
 	<div id="nav">
 		<div id='button'>
-			<a href=sentiment-analysis.php><img src=images/analyze.png /></a>
+			<a href="sentiment-analysis.php"><img src="images/analyze.png" class="analyze" /></a>
+			<img src="images/ajax-loader.gif" class="loading" />
+			<script>
+				$(".analyze").click(function() {
+					$(".analyze").hide();
+					$(".loading").show();
+				});
+			</script>
 		</div>
 	<?php 
 			/* CREATING A NEW TABLE FOR EACH USER */

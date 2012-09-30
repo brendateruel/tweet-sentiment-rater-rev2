@@ -45,14 +45,23 @@ img {
 #nav {
 	background-color: #f1f1f1;
 	height: 80px;
+	position: relative;
 }
 
 #nav #button {
-	position: relative;
+	position: absolute;
 	float:right;
 	right: 10px;
 	top: 15px;
 	margin: 5px;
+}
+
+#button .loading {
+	display: none;
+	position: absolute;
+	float:right;
+	right: 25px;
+	top: 5px;
 }
 
 #content {
@@ -78,10 +87,10 @@ img {
 }
 
 #default-friends img.user-image {
-	vertical-align: bottom;
+	vertical-align: middle;
 	position: relative;
 	float: left;
-	margin: 5px 10px 5px 5px;
+	margin: 5px 10px 10px 5px;
 }
 
 #default-friends .user {
