@@ -143,6 +143,14 @@
 		echo "<div id='default-friends-subhead'><h2>Friends</h2></div>";
 
 		/* SELECT DISPLAY ORDER */
+		function twitterify($tweet) {
+		  $tweet = preg_replace("#(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t< ]*)#", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $tweet);
+		  $tweet = preg_replace("#(^|[\n ])((www|ftp)\.[^ \"\t\n\r< ]*)#", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $tweet);
+		  $tweet = preg_replace("/@(\w+)/", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">@\\1</a>", $tweet);
+		  $tweet = preg_replace("/#(\w+)/", "<a href=\"http://search.twitter.com/search?q=\\1\" target=\"_blank\">#\\1</a>", $tweet);
+		return $tweet;
+		}
+			
 		$friends_list_default = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.user_handle";
 		$friends_list_desc = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.avg_sentiment_rating DESC";
 		$friends_list_asc = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle WHERE {$new_temp_timeline}.date_time >= SYSDATE() - INTERVAL 1 DAY GROUP BY {$new_friends_table}.avg_sentiment_rating ASC";
@@ -176,10 +184,11 @@
 						echo "<div id='rating'><img src=images/{$mood_bg}.png />{$percent}%</div>";
 						}
 				echo "<img src={$user_image} class=user-image />";
-				echo "<div class='user'>{$user}</div>";
+				echo "<div class='user'><a href=http://www.twitter.com/{$user} target=_blank>{$user}</a></div>";
 				echo $row['date_time'];
+				$tweet = twitterify($tweet);
 				if(strtotime($row['date_time']) >= strtotime('now -24 hours')) {
-					echo "<div class='latest-tweet'>Latest {$row['date_time']}: {$tweet}</div>";
+					echo "<div class='latest-tweet'>Latest ({$row['date_time']}): {$tweet}</div>";
 				} else {
 					echo "<div class='latest-tweet'>No tweets imported recently within 24 hours.</div>";
 				}

@@ -134,7 +134,7 @@
 					$tweet = twitterify($tweet);
 					echo "<div id='default-friends'>";
 					echo "<img src={$user_image} class=user-image />";
-					echo "<div class='user'>{$user}";
+					echo "<div class='user'><a href=http://www.twitter.com/{$user} target=_blank>{$user}</a>";
 					/*$sentiment_score = $row['sentiment_score'];*/
 						if (is_null($sentiment_score)) {
 						echo "<img src=images/new-update.png class=new-marker />";
