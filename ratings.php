@@ -75,30 +75,33 @@
 		function average($solution){
 			return array_sum($solution)/count($solution) ;
 		}
-			
+		$stmt2 = $mysqli->stmt_init();	
 		if (!($stmt = $mysqli->prepare("SELECT user_handle FROM {$new_friends_table}"))) {
 			 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 		}
 		if (!$stmt->execute()) {
 			 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
 		}
+		$stmt->store_result();
 		$stmt->bind_result($user);
 		while($row = $stmt->fetch()) {
 			set_time_limit(0);
-			$stmt = $mysqli->stmt_init();
-			if (!($stmt = $mysqli->prepare("SELECT sentiment_score FROM {$new_temp_timeline} WHERE user_handle='{$user}' AND {$new_temp_timeline}.date_time >= SYSDATE() - INTERVAL 1 DAY"))) {
+			echo $user;
+			//$user = $row['user_handle'];	
+			$stmt2 = $mysqli->stmt_init();
+			if (!($stmt2 = $mysqli->prepare("SELECT sentiment_score FROM {$new_temp_timeline}"))) {
 				 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
-			if (!$stmt->execute()) {
+			if (!$stmt2->execute()) {
 				 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
-			$stmt->bind_result($score);
-			$row_cnt = $stmt->num_rows;
+			$stmt2->bind_result($score);
+			$row_cnt = $stmt2->num_rows;
 			$solution = array();
-			while ($array = $stmt->fetch()) {
+			while ($array = $stmt2->fetch()) {
 				$solution[]=$score;
 				}
-				//echo $user;
+			//echo $user;
 			if ($row_cnt >= 0) {
 				$array_sum = array_sum($solution);
 				//echo $array_sum;
@@ -135,21 +138,24 @@
 		echo "<div id='default-friends-subhead'><h2>Friends</h2></div>";
 
 		/* SELECT DISPLAY ORDER */
-		$friends_list_default = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle WHERE {$new_temp_timeline}.date_time >= SYSDATE() - INTERVAL 1 DAY GROUP BY {$new_friends_table}.user_handle";
+		$friends_list_default = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.user_handle";
 		$friends_list_desc = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.avg_sentiment_rating DESC";
 		$friends_list_asc = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle WHERE {$new_temp_timeline}.date_time >= SYSDATE() - INTERVAL 1 DAY GROUP BY {$new_friends_table}.avg_sentiment_rating ASC";
 			
-		$stmt = $mysqli->stmt_init();
-		if (!($stmt = $mysqli->prepare("{$friends_list_desc}"))) {
+		if (!($stmt = $mysqli->prepare("{$friends_list_default}"))) {
 			 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 		}
 		if (!$stmt->execute()) {
 			 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
 		}
-		$stmt->bind_result($user, $user_image, $tweet, $avg_sentiment_rating, $date_time);
+		$res = $stmt->get_result();
 
-		while($row = $stmt->fetch()) {
+		while($row = $res->fetch_assoc()) {
 			set_time_limit(0);
+			$user = $row['user_handle'];
+			$user_image = $row['user_image_URL'];
+			$tweet = $row['tweet'];
+			$avg_sentiment_rating = $row['avg_sentiment_rating'];
 			if($avg_sentiment_rating > 0) {
 				$mood_bg = "positive";
 				} elseif($avg_sentiment_rating < 0) {
@@ -166,15 +172,14 @@
 						}
 				echo "<img src={$user_image} class=user-image />";
 				echo "<div class='user'>{$user}</div>";
-				echo $date_time;
-				if(strtotime($date_time) >= strtotime('now -24 hours')) {
-					echo "<div class='latest-tweet'>Latest {$date_time}: {$tweet}</div>";
+				echo $row['date_time'];
+				if(strtotime($row['date_time']) >= strtotime('now -24 hours')) {
+					echo "<div class='latest-tweet'>Latest {$row['date_time']}: {$tweet}</div>";
 				} else {
 					echo "<div class='latest-tweet'>No tweets imported recently within 24 hours.</div>";
 				}
 			echo "</div>";
 		}
-		$stmt->close();
 
 		?>
 	</div>
