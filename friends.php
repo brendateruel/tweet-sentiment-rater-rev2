@@ -108,6 +108,13 @@
 			</div>	
 			
 			<?php
+			function twitterify($tweet) {
+			  $tweet = preg_replace("#(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t< ]*)#", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $tweet);
+			  $tweet = preg_replace("#(^|[\n ])((www|ftp)\.[^ \"\t\n\r< ]*)#", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $tweet);
+			  $tweet = preg_replace("/@(\w+)/", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">@\\1</a>", $tweet);
+			  $tweet = preg_replace("/#(\w+)/", "<a href=\"http://search.twitter.com/search?q=\\1\" target=\"_blank\">#\\1</a>", $tweet);
+			return $tweet;
+			}
 			/* ALL FRIENDS */
 			echo "<div id='default-friends-subhead'><h2>Friends</h2></div>";
 			$stmt = $mysqli->stmt_init();
@@ -124,6 +131,7 @@
 				/*$user = $row['user_handle'];
 				$user_image = $row['user_image_URL'];
 				$tweet = $row['tweet'];*/
+					$tweet = twitterify($tweet);
 					echo "<div id='default-friends'>";
 					echo "<img src={$user_image} class=user-image />";
 					echo "<div class='user'>{$user}";
@@ -132,7 +140,7 @@
 						echo "<img src=images/new-update.png class=new-marker />";
 						}
 					echo "</div>";
-					echo "<div class='latest-tweet'>Latest {$date_time}: {$tweet}</div>";
+					echo "<div class='latest-tweet'>Latest ({$date_time}): {$tweet}</div>";
 					echo "</div>";
 			}
 			?>
