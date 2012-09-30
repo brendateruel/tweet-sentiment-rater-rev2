@@ -118,7 +118,18 @@
 			/* ALL FRIENDS */
 			echo "<div id='default-friends-subhead'><h2>Friends</h2></div>";
 			$stmt = $mysqli->stmt_init();
-			if (!($stmt = $mysqli->prepare("SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_temp_timeline}.sentiment_score, {$new_temp_timeline}.date_time FROM {$new_friends_table} LEFT JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.user_handle ORDER BY {$new_friends_table}.user_handle, {$new_temp_timeline}.date_time DESC"))) {
+			if (!($stmt = $mysqli->prepare("SELECT
+		{$new_friends_table}.user_handle,
+       {$new_friends_table}.user_image_URL,
+       {$new_temp_timeline}.tweet,
+       {$new_temp_timeline}.sentiment_score,
+       MAX({$new_temp_timeline}.date_time)
+FROM {$new_friends_table}
+LEFT JOIN {$new_temp_timeline} ON
+{$new_friends_table}.user_handle={$new_temp_timeline}.user_handle
+GROUP BY {$new_friends_table}.user_handle
+ORDER BY {$new_friends_table}.user_handle,
+         {$new_temp_timeline}.date_time DESC"))) {
 				 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
 			if (!$stmt->execute()) {

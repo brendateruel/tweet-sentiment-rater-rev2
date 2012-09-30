@@ -27,7 +27,6 @@
 			$home_timeline = $twitteroauth->get('statuses/home_timeline', array('count' => 500));
 		}
 
-		echo "<div class='logo'>Happy Meter</div>";
 		echo "<div id='user-login'>";
 		if(!empty($_SESSION['username'])){  
 			echo $session_username;
@@ -37,6 +36,7 @@
 					//header('Location: login.php');
 				}
 		echo "</div>";
+		echo "<div class='logo'>Happy Meter</div>";
 		
 			/*Alchemy API SDK*/ 
 			include('module/AlchemyAPI_CURL.php');
@@ -183,9 +183,9 @@
 						$percent = $avg_sentiment_rating * 100;
 						echo "<div id='rating'><img src=images/{$mood_bg}.png />{$percent}%</div>";
 						}
-				echo "<img src={$user_image} class=user-image />";
+				echo "<a href=http://www.twitter.com/{$user} target=_blank><img src={$user_image} class=user-image /></a>";
 				echo "<div class='user'><a href=http://www.twitter.com/{$user} target=_blank>{$user}</a></div>";
-				echo $row['date_time'];
+				//echo $row['date_time'];
 				$tweet = twitterify($tweet);
 				if(strtotime($row['date_time']) >= strtotime('now -24 hours')) {
 					echo "<div class='latest-tweet'>Latest ({$row['date_time']}): {$tweet}</div>";

@@ -35,11 +35,14 @@ img {
 
 #header .logo {
 	font-family: 'Homemade Apple', cursive;
+	font-size: 2em;
+	float: left;
 }
 
 #header #user-login {
-	position:relative;
-	float:right;
+	position: relative;
+	float: right;
+	top: 5px;
 }
 
 #nav {
@@ -77,7 +80,7 @@ img {
 }
 
 #default-friends {
-	padding: 5px 20px 5px 20px;
+	padding: 10px 20px 10px 20px;
 	margin: 2px;
 	color: #000000;
 	background-color: #dbdbdb;
@@ -90,13 +93,12 @@ img {
 	vertical-align: middle;
 	position: relative;
 	float: left;
-	top: 10px;
 	margin: 5px 10px 10px 5px;
 }
 
 #default-friends .user {
 	font-weight: bold;
-	margin: 3px 5px;
+	margin: 5px 5px;
 }
 
 #default-friends .user a {
@@ -118,7 +120,7 @@ img {
 #default-friends .latest-tweet {
 	font-size: .7em;
 	width: 70%;
-	padding-bottom: 18px;
+	padding-bottom: 15px;
 }
 
 #default-friends-subhead {
@@ -178,8 +180,6 @@ img {
 #default-friends #rating img {
 	vertical-align: middle;
 }
-
-
 
 #new-friends {
 	padding: 10px;
