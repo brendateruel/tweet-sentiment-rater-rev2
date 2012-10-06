@@ -31,7 +31,7 @@
 			echo "Welcome, {$session_username}!";
 			} else {
 					//header('Location: welcome.php'); 
-					echo "<a href=login.php>Sign in</a>";
+					echo "<a href=login.php class=button>Sign in</a>";
 					//header('Location: login.php');
 				}
 		echo "</div>";
@@ -71,7 +71,7 @@
 		a little extra sunshine today</br>
 		</p>
 		<p class="welcome">
-		<a href="login.php">Login or Sign up with Twitter now</a>
+		<a href="login.php" class="button">Login or Sign up with Twitter now</a>
 		</p>
 	</div>
 	<!-- end #content -->
