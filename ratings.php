@@ -49,12 +49,12 @@
 	</div>
 	
 	<div id="nav">
-		<div id='button'>
+		<div id="button">
 			<img src="images/ajax-loader.gif" class="loading" />
-			<a href="sentiment-analysis.php"><img src="images/analyze.png" class="analyze" /></a>
+			<a href="sentiment-analysis.php" class="button">Analyze Now!</a>
 			<script>
-				$(".analyze").click(function() {
-					$(".analyze").hide();
+				$(".button").click(function() {
+					$(".button").hide();
 					$(".loading").show();
 				});
 			</script>

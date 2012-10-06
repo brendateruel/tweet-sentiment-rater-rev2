@@ -3,10 +3,16 @@
 	padding: 0;
 }
 
+html{
+	height: 100%;
+}
+
 body {
 	margin: 0px auto 0px auto;
 	background-color: #ffffff;
 	font-family: Lucida Sans, Arial, sans-serif;
+	height: 100%;
+	width: 100%;
 }
 
 a {
@@ -62,9 +68,25 @@ img {
 #button .loading {
 	display: none;
 	position: absolute;
-	float:right;
 	right: 25px;
 	top: 5px;
+	float:right;
+	background-color: #f1f1f1;
+}
+
+
+.button {
+	background-color: #00aced;
+	color: #ffffff;
+	position: relative;
+	top: 8px;
+	padding: 12px;
+	border-radius: 12px;
+	box-shadow: 2px 2px 2px #999999;
+}
+
+.button a {
+	color: #ffffff;
 }
 
 #content {
@@ -94,6 +116,11 @@ img {
 	position: relative;
 	float: left;
 	margin: 5px 10px 10px 5px;
+}
+
+#default-friends img.user-image a {
+	border: 0px;
+	text-decoration: none;
 }
 
 #default-friends .user {

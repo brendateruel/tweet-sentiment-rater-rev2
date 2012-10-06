@@ -3,6 +3,8 @@
 <head>
 	<meta charset="utf-8" />
     <link rel="stylesheet" href="style.css" media="screen" /> 
+	<link href="http://fonts.googleapis.com/css?family=Homemade+Apple" rel="stylesheet" type="text/css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<title>Welcome - Tweet Sentiment Rater</title>
 </head>
 
@@ -25,13 +27,13 @@
 			$home_timeline = $twitteroauth->get('statuses/home_timeline', array('count' => 500));
 		}
 
-		echo "Happy Meter";
+		echo "<div class=logo>Happy Meter</div>";
 		echo "<div id='user-login'>";
 		if(!empty($_SESSION['username'])){  
 			echo "Welcome, {$session_username}!";
 			} else {
 					//header('Location: welcome.php'); 
-					echo "<a href=login.php>Sign in</a>";
+					echo "<a href=login.php class=button>Sign in</a>";
 					//header('Location: login.php');
 				}
 		echo "</div>";
@@ -71,7 +73,7 @@
 		a little extra sunshine today</br>
 		</p>
 		<p class="welcome">
-		<a href="login.php">Login or Sign up with Twitter now</a>
+		<a href="login.php" class="button">Login or Sign up with Twitter now</a>
 		</p>
 	</div>
 	<!-- end #content -->
