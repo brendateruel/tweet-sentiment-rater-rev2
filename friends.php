@@ -117,8 +117,18 @@
 			}
 			/* ALL FRIENDS */
 			echo "<div id='default-friends-subhead'><h2>Friends</h2></div>";
-			$stmt = $mysqli->stmt_init();
-			if (!($stmt = $mysqli->prepare("SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_temp_timeline}.sentiment_score, {$new_temp_timeline}.date_time FROM {$new_friends_table} LEFT JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.user_handle ORDER BY {$new_friends_table}.user_handle, {$new_temp_timeline}.date_time DESC"))) {
+			/*$stmt = $mysqli->stmt_init();
+			if (!($stmt = $mysqli->prepare("SELECT DISTINCT
+				{$new_friends_table}.user_handle,
+				{$new_friends_table}.user_image_URL,
+				{$new_temp_timeline}.tweet,
+				{$new_temp_timeline}.sentiment_score,
+					MAX({$new_temp_timeline}.date_time)
+						FROM {$new_friends_table}
+						LEFT JOIN {$new_temp_timeline} ON
+							{$new_friends_table}.user_handle={$new_temp_timeline}.user_handle
+						GROUP BY {$new_friends_table}.user_handle
+						ORDER BY {$new_friends_table}.user_handle"))) {
 				 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
 			if (!$stmt->execute()) {
@@ -127,10 +137,32 @@
 			$stmt->bind_result($user, $user_image, $tweet, $sentiment_score, $date_time);
 			/*$res = $stmt->fetch();*/
 
-			while($row = $stmt->fetch()) {
-				/*$user = $row['user_handle'];
+			$query = "CREATE TEMPORARY TABLE t2 SELECT user_handle, tweet, MAX(date_time) AS maxdate, sentiment_score FROM {$new_temp_timeline} GROUP BY user_handle";
+			$query .= ("SELECT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, t1.tweet, t1.sentiment_score, t1.date_time
+										FROM {$new_temp_timeline} as t1, t2
+										JOIN {$new_friends_table}
+										ON {$new_friends_table}.user_handle = t1.user_handle 
+										WHERE t1.user_handle = t2.user_handle AND t1.date_time = t2.maxdate");
+		if ($mysqli->multi_query($query)) {
+    do {
+        /* store first result set */
+        if ($result = $mysqli->store_result()) {
+            while ($row = $result->fetch_row()) {
+                //printf("%s\n", $row[0]);
+				echo "1";
+            }
+            //$result->free();
+        }
+        /* print divider */
+        if ($mysqli->more_results()) {
+            //printf("-----------------\n");
+			echo "2";
+        }
+    } while ($mysqli->next_result());
+		while($row = $stmt->fetch()) {
+				$user = $row['user_handle'];
 				$user_image = $row['user_image_URL'];
-				$tweet = $row['tweet'];*/
+				$tweet = $row['tweet'];
 					$tweet = twitterify($tweet);
 					echo "<div id='default-friends'>";
 					echo "<img src={$user_image} class=user-image />";
@@ -143,6 +175,7 @@
 					echo "<div class='latest-tweet'>Latest ({$date_time}): {$tweet}</div>";
 					echo "</div>";
 			}
+		}
 			?>
 	</div>
 	<!-- end #content -->
