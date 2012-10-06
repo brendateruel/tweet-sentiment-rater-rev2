@@ -27,7 +27,7 @@
 			$home_timeline = $twitteroauth->get('statuses/home_timeline', array('count' => 500));
 		}
 
-		echo "<div class=logo>Happy Meter</div>";
+		echo "<div class=logo>happy meter</div>";
 		echo "<div id='user-login'>";
 		if(!empty($_SESSION['username'])){  
 			echo $session_username;
@@ -164,7 +164,11 @@
 	<div id="sidebar"></div>
 	<!-- end #sidebar -->
 
-	<div id="footer"></div>
+	<div id="footer">
+		<p class="footer">
+			credit Alchemy API + other libraries... contact bgteruel[at]gmail[dot]com
+		</p>
+	</div>
 	<!-- end #footer -->
 
 </div>

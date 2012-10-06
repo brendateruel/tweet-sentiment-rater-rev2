@@ -27,7 +27,7 @@
 			$home_timeline = $twitteroauth->get('statuses/home_timeline', array('count' => 500));
 		}
 
-		echo "<div class=logo>Happy Meter</div>";
+		echo "<div class=logo>happy meter</div>";
 		echo "<div id='user-login'>";
 		if(!empty($_SESSION['username'])){  
 			echo "Welcome, {$session_username}!";
@@ -48,7 +48,7 @@
 		?>
 	</div>
 	
-	<div id="nav"></div> 
+	<!-- <div id="nav"></div> --> 
 	<!-- end #nav -->
 
 	<div id="content">
@@ -58,7 +58,10 @@
 			header('Location: friends.php');
 		} */
 		?>
+
 		<p class="welcome">
+		<img src="images/positive.png" id="happy" />
+		<img src="images/negative.png" id="sad" /><br />
 		They say,</br>
 		"happiness is contagious”</br>
 		“birds of a feather flock together”</br>
@@ -81,7 +84,11 @@
 	<div id="sidebar"></div>
 	<!-- end #sidebar -->
 
-	<div id="footer"></div>
+	<div id="footer">
+		<p class="footer">
+			credit Alchemy API + other libraries... contact bgteruel[at]gmail[dot]com
+		</p>
+	</div>
 	<!-- end #footer -->
 
 </div>

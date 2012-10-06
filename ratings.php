@@ -36,7 +36,7 @@
 					//header('Location: login.php');
 				}
 		echo "</div>";
-		echo "<div class='logo'>Happy Meter</div>";
+		echo "<div class='logo'>happy meter</div>";
 		
 			/*Alchemy API SDK*/ 
 			include('module/AlchemyAPI_CURL.php');
@@ -202,7 +202,11 @@
 	<div id="sidebar"></div>
 	<!-- end #sidebar -->
 
-	<div id="footer"></div>
+	<div id="footer">
+		<p class="footer">
+			credit Alchemy API + other libraries... contact bgteruel[at]gmail[dot]com
+		</p>
+	</div>
 	<!-- end #footer -->
 
 </div>
