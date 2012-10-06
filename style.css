@@ -138,10 +138,16 @@ img {
 	color: #00aced;
 }
 
-#default-friends .user img.new-marker {
-	vertical-align: text-bottom;
+#default-friends .user .new-marker {
 	position: relative;
+	top: -5px;
 	margin: 0px 5px;
+	background-color: #00aced;
+	color: #ffffff;
+	font-size: .6em;
+	padding: 4px;
+	border-radius: 5px;
+	box-shadow: 1px 1px 1px #999999;
 }
 
 #default-friends .latest-tweet {
