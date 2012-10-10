@@ -40,10 +40,40 @@ img {
 	float: left;
 }
 
-#header #user-login {
-	position: relative;
+#header #user-login, #content #user-login {
+	position: absolute;
 	float: right;
+	top: 30px;
+	right: 20px;
+	padding: 7px;
+}
+
+#header #user-login img {
+	position: relative;
 	top: 5px;
+}
+
+.login, #header #user-login #menu:hover {
+	background-color: #444444;
+	color: #ffffff;
+	border: 1px #ffffff solid;
+	border-radius: 8px;
+	padding: 5px 5px 10px 10px;
+}
+
+#header #user-login #menu .logout {
+	display: none;
+	font-size: .7em;
+	padding-left: 10px;
+}
+
+#header #user-login #menu .logout a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+#header #user-login #menu .logout:hover {
+	background-color: #00aced;
 }
 
 #nav {
@@ -250,4 +280,11 @@ img {
 	font-size: .6em;
 	text-align: center;
 	color: #f1f1f1;
+}
+
+.goodbye {
+	font-family: 'Homemade Apple', cursive;
+	font-size: 2em;
+	text-align: center;
+	padding: 15px;
 }

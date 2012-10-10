@@ -29,10 +29,13 @@
 
 		echo "<div id='user-login'>";
 		if(!empty($_SESSION['username'])){  
-			echo $session_username;
+			echo "<div id=menu>";
+			echo "{$session_username}<img src=images/arrow-down-white.gif />";
+			echo "<div class=logout><a href=logout.php>Log Out</a></div>";
+			echo "</div>";
 			} else {
 					//header('Location: welcome.php'); 
-					echo "<a href=login.php>Sign in</a>";
+					echo "<a href=login.php class=button>Sign in</a>";
 					//header('Location: login.php');
 				}
 		echo "</div>";
@@ -45,7 +48,20 @@
 			$alchemyObj->loadAPIKey("../../alchemy_api_key.txt");
 
 		//ENDS
-		?>
+?>
+			<script>
+				$("#menu").click(function() {
+					$(".logout").show();
+					$("#menu").toggleClass("login", true);
+				});
+				$("body").click(function() {
+					$(".logout").hide();
+					$("#menu").toggleClass("login", false);
+				});
+				$("#menu").click(function(e) {
+					e.stopPropagation();
+				});
+			</script>
 	</div>
 	
 	<div id="nav">

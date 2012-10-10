@@ -30,14 +30,32 @@
 		echo "<div class=logo>happy meter</div>";
 		echo "<div id='user-login'>";
 		if(!empty($_SESSION['username'])){  
-			echo $session_username;
+			echo "<div id=menu>";
+			echo "{$session_username}<img src=images/arrow-down-white.gif />";
+			echo "<div class=logout><a href=logout.php>Log Out</a></div>";
+			echo "</div>";
 			} else {
 					//header('Location: welcome.php'); 
 					echo "<a href=login.php class=button>Sign in</a>";
 					//header('Location: login.php');
 				}
 		echo "</div>";
-		
+?>
+			<script>
+				$("#menu").click(function() {
+					$(".logout").show();
+					$("#menu").toggleClass("login", true);
+				});
+				$("body").click(function() {
+					$(".logout").hide();
+					$("#menu").toggleClass("login", false);
+				});
+				$("#menu").click(function(e) {
+					e.stopPropagation();
+				});
+			</script>
+
+<?php			
 			/*Alchemy API SDK*/ 
 			include('module/AlchemyAPI_CURL.php');
 			include('module/AlchemyAPIParams.php');
