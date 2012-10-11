@@ -82,7 +82,8 @@ if (!$check->execute()) {
 	echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
 }	else {
 		if($check->num_rows==0) {
-			header('Location: ratings.php');
+			//header('Location: ratings.php');
+			echo "we're good";
 			} else {
 			echo $check->num_rows . "not analyzed";
 			}
