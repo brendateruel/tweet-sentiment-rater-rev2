@@ -19,6 +19,7 @@ class TwitterOAuth {
   public $url;
   /* Set up the API root URL. */
   public $host = "https://api.twitter.com/1/";
+  //public $host = "https://api.twitter.com/1.1/";
   /* Set timeout default. */
   public $timeout = 30;
   /* Set connect timeout. */
@@ -146,7 +147,9 @@ class TwitterOAuth {
     $response = $this->oAuthRequest($url, 'GET', $parameters);
     if ($this->format === 'xml' && $this->decode_xml) {
       return simplexml_load_string($response);
-    }
+	//if ($this->format === 'json' && $this->decode_json) {
+		//return json_decode($response);
+	  }
     return $response;
   }
   

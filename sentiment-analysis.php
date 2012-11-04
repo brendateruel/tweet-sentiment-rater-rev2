@@ -31,29 +31,32 @@ if(!empty($_SESSION['username'])){
 //ENDS
 
 /* Selecting user's friends */
-$stmt = $mysqli->stmt_init();
 if (!($stmt = $mysqli->prepare("SELECT user_handle FROM {$new_friends_table}"))) {
 	 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 }
 if (!$stmt->execute()) {
 	 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
 }
-$stmt->bind_result($user);
-while($row = $stmt->fetch()) {
+$res = $stmt->get_result();
+while($row = $res->fetch_assoc()) {
+	$user = $row['user_handle'];
 /* Selecting each friend's tweets, NEED TO ADD DATE SELECTION? */
-		$stmt = $mysqli->stmt_init();
-		if(!($stmt = $mysqli->prepare("SELECT tweet, status_ID FROM {$new_temp_timeline} WHERE user_handle='{$user}' AND sentiment_score IS NULL AND date_time >= SYSDATE() - INTERVAL 1 DAY"))) {
+		if(!($stmt2 = $mysqli->prepare("SELECT tweet, status_ID FROM {$new_temp_timeline} WHERE user_handle='{$user}' AND sentiment_score IS NULL"))) {
 				 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
-		if (!$stmt->execute()) {
+		if (!$stmt2->execute()) {
 				 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
-		$stmt->bind_result($tweet, $status_ID);
+		$res2 = $stmt2->get_result();
 /* Running each tweet through Alchemy API sentiment analysis */
-		while($row2 = $stmt->fetch()) {
+		while($row2 = $res2->fetch_assoc()) {
 			set_time_limit(0);
-			$status_ID = $mysqli->real_escape_string($status_ID);
-			$response = $alchemyObj->TextGetTextSentiment($tweet);
+			$a = $row2['tweet'];
+			echo $a;
+			$b = $row2['status_ID'];
+			$a = $mysqli->real_escape_string($a);
+			echo $a;
+			$response = $alchemyObj->TextGetTextSentiment($a);
 			$result = simpleXML_load_string($response);
 			$sentiment = $result->docSentiment;
 			$mood = $sentiment->type;
@@ -61,29 +64,23 @@ while($row = $stmt->fetch()) {
 			echo $score . "\n";
 			$score = $mysqli->real_escape_string($score);
 /* Writing sentiment score to timeline table */
-			$stmt = $mysqli->stmt_init();
-			if(!($stmt = $mysqli->prepare("UPDATE {$new_temp_timeline} SET sentiment_score='{$score}' WHERE status_ID='{$status_ID}'"))) {
-					 echo "Statement failed: (" . $mysqli->errno . ") " . $mysqli->error;
-				}
-			$stmt->bind_param('i', $score);
-			if (!$stmt->execute()) {
-				 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
-				}
-			$stmt->close();
-			}
+			if(!($stmt3 = $mysqli->query("UPDATE {$new_temp_timeline} set sentiment_score='{$score}' WHERE status_ID='{$b}'"))) {
+					echo "Statement failed: (" . $mysqli->errno . ") " . $mysqli->error;
+					//if($statusInfo == "unsupported-text-language") {
+						//$stmt4 = $mysqli->query("UPDATE {$new_temp_timeline} set sentiment_score='9.7' WHERE status_ID='{$b}'");
+					//}
+				 }
+		}
 }
 
-$stmt = $mysqli->stmt_init();
 if(!($check = $mysqli->prepare("SELECT tweet, status_ID FROM {$new_temp_timeline} WHERE user_handle='{$user}' AND sentiment_score IS NULL"))){  
 	echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 }
-$check->bind_result($tweet, $status_ID);
 if (!$check->execute()) {
 	echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
 }	else {
 		if($check->num_rows==0) {
-			//header('Location: ratings.php');
-			echo "we're good";
+			header('Location: ratings.php');
 			} else {
 			echo $check->num_rows . "not analyzed";
 			}

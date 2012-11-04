@@ -24,7 +24,8 @@
 		/* Updating user's friends and timeline tables */
 			$new_friends_table = "friends_" . $session_username;
 			$new_temp_timeline = "temp_timeline_" . $session_username; 
-			$home_timeline = $twitteroauth->get('statuses/home_timeline', array('count' => 500));
+			$home_timeline = $twitteroauth->get('statuses/home_timeline', array('count' => 200));
+			$allfriends = $twitteroauth->get('friends/ids', array('screen_name' => $session_username));
 		}
 
 		echo "<div class=logo>happy meter</div>";
@@ -146,7 +147,7 @@
 						LEFT JOIN {$new_temp_timeline} ON
 							{$new_friends_table}.user_handle={$new_temp_timeline}.user_handle
 						GROUP BY {$new_friends_table}.user_handle
-						ORDER BY {$new_friends_table}.user_handle"))) {
+						ORDER BY {$new_temp_timeline}.date_time"))) {
 				 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
 			if (!$stmt->execute()) {

@@ -35,7 +35,7 @@ img {
 }
 
 #header .logo {
-	font-family: 'Homemade Apple', cursive;
+	font-family: 'Homemade Apple', Comic Sans MS;
 	font-size: 2em;
 	float: left;
 }
@@ -184,7 +184,7 @@ img {
 
 #default-friends-subhead {
 	padding: 10px;
-	font-family: 'Homemade Apple', cursive;
+	font-family: 'Homemade Apple', Comic Sans MS;
 	color: #00aced;
 	text-transform: capitalize;
 	background-color: #dbdbdb;
@@ -283,7 +283,7 @@ img {
 }
 
 .goodbye {
-	font-family: 'Homemade Apple', cursive;
+	font-family: 'Homemade Apple', Comic Sans MS;
 	font-size: 2em;
 	text-align: center;
 	padding: 15px;

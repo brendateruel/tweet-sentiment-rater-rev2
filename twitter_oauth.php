@@ -11,7 +11,7 @@ if(!empty($_GET['oauth_verifier']) && !empty($_SESSION['oauth_token']) && !empty
     header('Location: login.php');  
 }  
 
-// TwitterOAuth instance, with two new parameters we got in twitter_login.php  
+// TwitterOAuth instance, with two new parameters we got in login.php  
 $twitteroauth = new TwitterOAuth($tOauth_apiKey, $tOauth_apiSecret, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);  
 // Let's request the access token  
 $access_token = $twitteroauth->getAccessToken($_GET['oauth_verifier']); 
