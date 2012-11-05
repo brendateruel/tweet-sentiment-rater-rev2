@@ -44,7 +44,7 @@ while($row = $res->fetch_assoc()) {
 		if(!($stmt2 = $mysqli->prepare("SELECT tweet, status_ID FROM {$new_temp_timeline} WHERE user_handle='{$user}' AND sentiment_score IS NULL"))) {
 				 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
-		if (!$stmt2->execute()) {
+		if(!$stmt2->execute()) {
 				 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
 		$res2 = $stmt2->get_result();

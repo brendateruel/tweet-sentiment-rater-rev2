@@ -123,6 +123,38 @@
 							*/
 						/* mysqli_free_result($mysqli); -- is this needed?*/
 					}
+				
+				/* Selecting user's friends */
+if (!($stmt = $mysqli->prepare("SELECT user_handle FROM {$new_friends_table}"))) {
+	 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+}
+if (!$stmt->execute()) {
+	 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
+}
+$res = $stmt->get_result();
+while($row = $res->fetch_assoc()) {
+	$user = $row['user_handle'];
+/* Selecting each friend's tweets, NEED TO ADD DATE SELECTION? */
+		if(!($stmt2 = $mysqli->prepare("SELECT tweet, date_time FROM {$new_temp_timeline} WHERE user_handle='{$user}' ORDER BY date_time DESC LIMIT 1"))) {
+				 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+			}
+		if(!$stmt2->execute()) {
+				 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
+			}
+		$res2 = $stmt2->get_result();
+		while($row2 = $res2->fetch_assoc()) {
+			set_time_limit(0);
+			$max = $row2['date_time'];
+			$latest = $row2['tweet'];
+			$latest = $mysqli->real_escape_string($latest);
+			//echo $user;
+			//echo $max;
+			//echo $latest;
+				if(!($stmt3 = $mysqli->query("UPDATE {$new_friends_table} SET last_tweet='{$latest}', last_update='{$max}' WHERE user_handle='{$user}'"))) {
+					echo "Query failed: (" . $mysqli->errno . ") " . $mysqli->error;
+				}
+			}
+}
 				?>
 			</div>	
 			
@@ -136,30 +168,29 @@
 			}
 			/* ALL FRIENDS */
 			echo "<div id='default-friends-subhead'><h2>Friends</h2></div>";
-			$stmt = $mysqli->stmt_init();
-			if (!($stmt = $mysqli->prepare("SELECT DISTINCT
+			//$stmt4 = $mysqli->stmt_init();
+			if (!($stmt4 = $mysqli->prepare("SELECT 
 				{$new_friends_table}.user_handle,
 				{$new_friends_table}.user_image_URL,
-				{$new_temp_timeline}.tweet,
+				{$new_friends_table}.last_tweet,
 				{$new_temp_timeline}.sentiment_score,
-					MAX({$new_temp_timeline}.date_time)
+				{$new_friends_table}.last_update
 						FROM {$new_friends_table}
-						LEFT JOIN {$new_temp_timeline} ON
-							{$new_friends_table}.user_handle={$new_temp_timeline}.user_handle
-						GROUP BY {$new_friends_table}.user_handle
-						ORDER BY {$new_temp_timeline}.date_time"))) {
+							JOIN {$new_temp_timeline}
+								ON {$new_friends_table}.last_tweet={$new_temp_timeline}.tweet AND {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle
+						GROUP BY {$new_friends_table}.user_handle"))) {
 				 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
-			if (!$stmt->execute()) {
+			if (!$stmt4->execute()) {
 				 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
-			$stmt->bind_result($user, $user_image, $tweet, $sentiment_score, $date_time);
+			$stmt4->bind_result($user, $user_image, $last_tweet, $sentiment_score, $last_update);
 			/*$res = $stmt->fetch();*/
-			while($row = $stmt->fetch()) {
+			while($row = $stmt4->fetch()) {
 				//$user = $row['user_handle'];
 				//$user_image = $row['user_image_URL'];
 				//$tweet = $row['tweet'];
-					$tweet = twitterify($tweet);
+					$last_tweet = twitterify($last_tweet);
 					echo "<div id='default-friends'>";
 					echo "<img src={$user_image} class=user-image />";
 					echo "<div class='user'><a href=http://www.twitter.com/{$user} target=_blank>{$user}</a>";
@@ -168,8 +199,8 @@
 						echo "<span class=new-marker>new update!</span>";
 						}
 					echo "</div>";
-					if(strtotime($date_time) >= strtotime('now -24 hours')) {
-						echo "<div class='latest-tweet'>Latest ({$date_time}): {$tweet}</div>";
+					if(strtotime($last_update) >= strtotime('now -24 hours')) {
+						echo "<div class='latest-tweet'>Latest ({$last_update}): {$last_tweet}</div>";
 					} else {
 						echo "<div class='latest-tweet'>No tweets imported recently within 24 hours.</div>";
 					}
