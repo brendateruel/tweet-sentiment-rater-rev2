@@ -167,9 +167,30 @@
 		return $tweet;
 		}
 			
-		$friends_list_default = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.user_handle";
-		$friends_list_desc = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle GROUP BY {$new_friends_table}.avg_sentiment_rating DESC";
-		$friends_list_asc = "SELECT DISTINCT {$new_friends_table}.user_handle, {$new_friends_table}.user_image_URL, {$new_temp_timeline}.tweet, {$new_friends_table}.avg_sentiment_rating, {$new_temp_timeline}.date_time FROM {$new_friends_table} JOIN {$new_temp_timeline} ON {$new_friends_table}.user_handle={$new_temp_timeline}.user_handle WHERE {$new_temp_timeline}.date_time >= SYSDATE() - INTERVAL 1 DAY GROUP BY {$new_friends_table}.avg_sentiment_rating ASC";
+		$friends_list_default = "SELECT 
+				{$new_friends_table}.user_handle,
+				{$new_friends_table}.user_image_URL,
+				{$new_friends_table}.last_tweet,
+				{$new_friends_table}.avg_sentiment_rating,
+				{$new_friends_table}.last_update
+						FROM {$new_friends_table}
+						ORDER BY {$new_friends_table}.user_handle";
+		$friends_list_desc = "SELECT 
+				{$new_friends_table}.user_handle,
+				{$new_friends_table}.user_image_URL,
+				{$new_friends_table}.last_tweet,
+				{$new_friends_table}.avg_sentiment_rating,
+				{$new_friends_table}.last_update
+						FROM {$new_friends_table}
+						ORDER BY {$new_friends_table}.avg_sentiment_rating DESC";
+		$friends_list_asc = "SELECT
+				{$new_friends_table}.user_handle,
+				{$new_friends_table}.user_image_URL,
+				{$new_friends_table}.last_tweet,
+				{$new_friends_table}.avg_sentiment_rating,
+				{$new_friends_table}.last_update
+						FROM {$new_friends_table}
+						ORDER BY {$new_friends_table}.avg_sentiment_rating ASC";
 			
 		if (!($stmt = $mysqli->prepare("{$friends_list_default}"))) {
 			 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
@@ -183,7 +204,7 @@
 			set_time_limit(0);
 			$user = $row['user_handle'];
 			$user_image = $row['user_image_URL'];
-			$tweet = $row['tweet'];
+			$last_tweet = $row['last_tweet'];
 			$avg_sentiment_rating = $row['avg_sentiment_rating'];
 			if($avg_sentiment_rating > 0) {
 				$mood_bg = "positive";
@@ -202,9 +223,9 @@
 				echo "<a href=http://www.twitter.com/{$user} target=_blank><img src={$user_image} class=user-image /></a>";
 				echo "<div class='user'><a href=http://www.twitter.com/{$user} target=_blank>{$user}</a></div>";
 				//echo $row['date_time'];
-				$tweet = twitterify($tweet);
-				if(strtotime($row['date_time']) >= strtotime('now -24 hours')) {
-					echo "<div class='latest-tweet'>Latest ({$row['date_time']}): {$tweet}</div>";
+				$last_tweet = twitterify($last_tweet);
+				if(strtotime($row['last_update']) >= strtotime('now -24 hours')) {
+					echo "<div class='latest-tweet'>Latest ({$row['last_update']}): {$last_tweet}</div>";
 				} else {
 					echo "<div class='latest-tweet'>No tweets imported recently within 24 hours.</div>";
 				}

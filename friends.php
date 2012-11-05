@@ -124,37 +124,37 @@
 						/* mysqli_free_result($mysqli); -- is this needed?*/
 					}
 				
-				/* Selecting user's friends */
-if (!($stmt = $mysqli->prepare("SELECT user_handle FROM {$new_friends_table}"))) {
-	 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
-}
-if (!$stmt->execute()) {
-	 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
-}
-$res = $stmt->get_result();
-while($row = $res->fetch_assoc()) {
-	$user = $row['user_handle'];
-/* Selecting each friend's tweets, NEED TO ADD DATE SELECTION? */
-		if(!($stmt2 = $mysqli->prepare("SELECT tweet, date_time FROM {$new_temp_timeline} WHERE user_handle='{$user}' ORDER BY date_time DESC LIMIT 1"))) {
-				 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
-			}
-		if(!$stmt2->execute()) {
-				 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
-			}
-		$res2 = $stmt2->get_result();
-		while($row2 = $res2->fetch_assoc()) {
-			set_time_limit(0);
-			$max = $row2['date_time'];
-			$latest = $row2['tweet'];
-			$latest = $mysqli->real_escape_string($latest);
-			//echo $user;
-			//echo $max;
-			//echo $latest;
-				if(!($stmt3 = $mysqli->query("UPDATE {$new_friends_table} SET last_tweet='{$latest}', last_update='{$max}' WHERE user_handle='{$user}'"))) {
-					echo "Query failed: (" . $mysqli->errno . ") " . $mysqli->error;
-				}
-			}
-}
+				/* Selecting most recent tweets */
+					if (!($stmt = $mysqli->prepare("SELECT user_handle FROM {$new_friends_table}"))) {
+						 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+					}
+					if (!$stmt->execute()) {
+						 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
+					}
+					$res = $stmt->get_result();
+					while($row = $res->fetch_assoc()) {
+						$user = $row['user_handle'];
+					/* Selecting each friend's tweets, NEED TO ADD DATE SELECTION? */
+							if(!($stmt2 = $mysqli->prepare("SELECT tweet, date_time FROM {$new_temp_timeline} WHERE user_handle='{$user}' ORDER BY date_time DESC LIMIT 1"))) {
+									 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+								}
+							if(!$stmt2->execute()) {
+									 echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
+								}
+							$res2 = $stmt2->get_result();
+							while($row2 = $res2->fetch_assoc()) {
+								set_time_limit(0);
+								$max = $row2['date_time'];
+								$latest = $row2['tweet'];
+								$latest = $mysqli->real_escape_string($latest);
+								//echo $user;
+								//echo $max;
+								//echo $latest;
+									if(!($stmt3 = $mysqli->query("UPDATE {$new_friends_table} SET last_tweet='{$latest}', last_update='{$max}' WHERE user_handle='{$user}'"))) {
+										echo "Query failed: (" . $mysqli->errno . ") " . $mysqli->error;
+									}
+								}
+					}
 				?>
 			</div>	
 			
