@@ -701,7 +701,11 @@ class AlchemyAPI
 			if ($status[0] != "OK")
 			{
 				$statusInfo = $doc->xpath("/results/statusInfo");
-				throw new Exception("Error making API call: $statusInfo[0]");
+				if($statusInfo[0] == "unsupported-text-language") {
+					echo "too little text. cannot analyze. let's move on";
+				} else {
+					throw new Exception("Error making API call: $statusInfo[0]");
+					}
 			}
 		}
 		else

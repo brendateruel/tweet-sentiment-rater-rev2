@@ -53,6 +53,11 @@ while($row = $res->fetch_assoc()) {
 			set_time_limit(0);
 			$a = $row2['tweet'];
 			echo $a;
+			$a_cnt = strlen($a);
+			if($a_cnt<15) {
+				$a = str_pad($a, 15);
+				echo $a;
+				}
 			$b = $row2['status_ID'];
 			$a = $mysqli->real_escape_string($a);
 			echo $a;
@@ -60,6 +65,7 @@ while($row = $res->fetch_assoc()) {
 			$result = simpleXML_load_string($response);
 			$sentiment = $result->docSentiment;
 			$mood = $sentiment->type;
+			echo $mood;
 			$score = $sentiment->score;
 			echo $score . "\n";
 			$score = $mysqli->real_escape_string($score);
@@ -80,7 +86,8 @@ if (!$check->execute()) {
 	echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
 }	else {
 		if($check->num_rows==0) {
-			header('Location: ratings.php');
+			//header('Location: ratings.php');
+			printf("<script>location.href='ratings.php'</script>");
 			} else {
 			echo $check->num_rows . "not analyzed";
 			}
