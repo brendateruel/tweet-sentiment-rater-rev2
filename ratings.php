@@ -158,15 +158,20 @@
 		/* SHOW FRIENDS WITH SENTIMENT RATINGS */
 		echo "<div id='default-friends-subhead'><h2>Friends</h2></div>";
 
-		/* SELECT DISPLAY ORDER */
-		function twitterify($tweet) {
-		  $tweet = preg_replace("#(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t< ]*)#", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $tweet);
-		  $tweet = preg_replace("#(^|[\n ])((www|ftp)\.[^ \"\t\n\r< ]*)#", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $tweet);
-		  $tweet = preg_replace("/@(\w+)/", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">@\\1</a>", $tweet);
-		  $tweet = preg_replace("/#(\w+)/", "<a href=\"http://search.twitter.com/search?q=\\1\" target=\"_blank\">#\\1</a>", $tweet);
-		return $tweet;
-		}
-			
+		?>
+				
+
+		<!-- SELECT DISPLAY ORDER -->
+		<select id='sort' 
+			name='sort'
+			onchange="window.location='?sort='+this.value;">
+				      <option value='name' <?php if(!isset($_GET['sort']) || $_GET['sort']=='name'){$_GET['sort'] = 'user_handle'; echo "selected";} ?>>Alphabetical</option>
+					  <option value='rating-desc' <?php if(isset($_GET['sort']) && $_GET['sort']=='rating-desc'){$_GET['sort'] = 'avg_sentiment_rating DESC'; echo "selected";} ?>>Rating - High to Low</option>
+					  <option value='rating-asc' <?php if(isset($_GET['sort']) && $_GET['sort']=='rating-asc'){$_GET['sort'] = 'avg_sentiment_rating ASC'; echo "selected";} ?>>Rating - Low to High</option>
+		</select>
+		
+		<?php		
+		
 		$friends_list_default = "SELECT 
 				{$new_friends_table}.user_handle,
 				{$new_friends_table}.user_image_URL,
@@ -174,7 +179,8 @@
 				{$new_friends_table}.avg_sentiment_rating,
 				{$new_friends_table}.last_update
 						FROM {$new_friends_table}
-						ORDER BY {$new_friends_table}.user_handle";
+						ORDER BY {$new_friends_table}.".$_GET['sort'];
+		/*
 		$friends_list_desc = "SELECT 
 				{$new_friends_table}.user_handle,
 				{$new_friends_table}.user_image_URL,
@@ -191,7 +197,16 @@
 				{$new_friends_table}.last_update
 						FROM {$new_friends_table}
 						ORDER BY {$new_friends_table}.avg_sentiment_rating ASC";
-			
+		*/
+						
+		function twitterify($tweet) {
+		  $tweet = preg_replace("#(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t< ]*)#", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $tweet);
+		  $tweet = preg_replace("#(^|[\n ])((www|ftp)\.[^ \"\t\n\r< ]*)#", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $tweet);
+		  $tweet = preg_replace("/@(\w+)/", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">@\\1</a>", $tweet);
+		  $tweet = preg_replace("/#(\w+)/", "<a href=\"http://search.twitter.com/search?q=\\1\" target=\"_blank\">#\\1</a>", $tweet);
+		return $tweet;
+		}
+		
 		if (!($stmt = $mysqli->prepare("{$friends_list_default}"))) {
 			 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 		}
