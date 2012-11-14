@@ -70,7 +70,7 @@
 	<div id="nav">
 		<div id="button">
 			<img src="images/ajax-loader.gif" class="loading" />
-			<a href="sentiment-analysis.php" class="button">Analyze Now!</a>
+			<a href="sentiment-analysis.php" class="button">Analyze now!</a>
 			<script>
 				$(".button").click(function() {
 					$(".button").hide();

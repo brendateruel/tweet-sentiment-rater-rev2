@@ -67,7 +67,7 @@
 	<div id="nav">
 		<div id="button">
 			<img src="images/ajax-loader.gif" class="loading" />
-			<a href="sentiment-analysis.php" class="button">Analyze Now!</a>
+			<a href="sentiment-analysis.php" class="button">Do it again!</a>
 			<script>
 				$(".button").click(function() {
 					$(".button").hide();
@@ -154,21 +154,24 @@
 			header('Location: twitter_update.php');
 		}		
 		*/
-
-		/* SHOW FRIENDS WITH SENTIMENT RATINGS */
-		echo "<div id='default-friends-subhead'><h2>Friends</h2></div>";
-
 		?>
-				
+
+		<!-- SHOW FRIENDS WITH SENTIMENT RATINGS -->
+			<div id="sort-bar">
+			<select id="sort" 
+				name="sort"
+				onchange="window.location='?sort='+this.value;">
+						  <option value='name' <?php if(!isset($_GET['sort']) || $_GET['sort']=='name'){$_GET['sort'] = 'user_handle'; echo "selected";} ?>>Alphabetical</option>
+						  <option value='rating-desc' <?php if(isset($_GET['sort']) && $_GET['sort']=='rating-desc'){$_GET['sort'] = 'avg_sentiment_rating DESC'; echo "selected";} ?>>Rating - High to Low</option>
+						  <option value='rating-asc' <?php if(isset($_GET['sort']) && $_GET['sort']=='rating-asc'){$_GET['sort'] = 'avg_sentiment_rating ASC'; echo "selected";} ?>>Rating - Low to High</option>
+			</select>
+			</div>
+		<div id="default-friends-subhead">
 
 		<!-- SELECT DISPLAY ORDER -->
-		<select id='sort' 
-			name='sort'
-			onchange="window.location='?sort='+this.value;">
-				      <option value='name' <?php if(!isset($_GET['sort']) || $_GET['sort']=='name'){$_GET['sort'] = 'user_handle'; echo "selected";} ?>>Alphabetical</option>
-					  <option value='rating-desc' <?php if(isset($_GET['sort']) && $_GET['sort']=='rating-desc'){$_GET['sort'] = 'avg_sentiment_rating DESC'; echo "selected";} ?>>Rating - High to Low</option>
-					  <option value='rating-asc' <?php if(isset($_GET['sort']) && $_GET['sort']=='rating-asc'){$_GET['sort'] = 'avg_sentiment_rating ASC'; echo "selected";} ?>>Rating - Low to High</option>
-		</select>
+
+			<h2>Friends</h2>
+		</div>
 		
 		<?php		
 		

@@ -24,7 +24,10 @@ img {
 }
 
 #wrapper {
+	margin: 0px auto 0px auto;
 	background-color: #f1f1f1;
+	max-width: 900px;
+	min-width: 550px;
 }
 
 #header {
@@ -41,7 +44,7 @@ img {
 }
 
 #header #user-login, #content #user-login {
-	position: absolute;
+	position: relative;
 	float: right;
 	top: 30px;
 	right: 20px;
@@ -82,8 +85,12 @@ img {
 	position: relative;
 }
 
+#nav p {
+	margin-right: 50px;
+}
+
 #nav #button {
-	position: absolute;
+	position: relative;
 	float:right;
 	right: 10px;
 	top: 15px;
@@ -183,12 +190,24 @@ img {
 }
 
 #default-friends-subhead {
-	padding: 10px;
+	padding: 5px 10px 5px 10px;
 	font-family: 'Homemade Apple', Comic Sans MS;
 	color: #00aced;
 	text-transform: capitalize;
 	background-color: #dbdbdb;
 	border-top: 15px solid #00aced;
+}
+
+#sort-bar {
+	background-color: #00aced;
+	height: 20px;
+	padding: 0px 10px 0px 10px;
+}
+
+#sort {
+	position: relative;
+	float: right;
+	top: 5px;
 }
 
 #default-friends.negative {
@@ -232,7 +251,7 @@ img {
 
 #default-friends #rating {
 	position: absolute;
-	right: 20px;
+	right: 40px;
 	width: 25%;
 }
 
