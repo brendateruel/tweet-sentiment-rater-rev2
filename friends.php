@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="style.css" media="screen" /> 
 	<link href="http://fonts.googleapis.com/css?family=Homemade+Apple" rel="stylesheet" type="text/css">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-	<title>Welcome - Tweet Sentiment Rater</title>
+	<title>Friends - Tweet Sentiment Rater</title>
 </head>
 
 <body>
@@ -32,7 +32,7 @@
 		echo "<div id='user-login'>";
 		if(!empty($_SESSION['username'])){  
 			echo "<div id=menu>";
-			echo "{$session_username}<img src=images/arrow-down-white.gif />";
+			echo "{$session_username}<img src=images/arrow-down-white.gif alt='arrow down' />";
 			echo "<div class=logout><a href=logout.php>Log Out</a></div>";
 			echo "</div>";
 			} else {
@@ -69,7 +69,7 @@
 	
 	<div id="nav">
 		<div id="button">
-			<img src="images/ajax-loader.gif" class="loading" />
+			<img src="images/ajax-loader.gif" class="loading" alt="loading icon" />
 			<a href="sentiment-analysis.php" class="button">Analyze now!</a>
 			<script>
 				$(".button").click(function() {
@@ -108,7 +108,7 @@
 						$date_time = date("Y-m-d H:i:s", strtotime($status->created_at)); 
 
 						if (($query = $mysqli->query("INSERT INTO {$new_friends_table} (user_handle, user_image_URL) VALUES ('{$user->screen_name}', '{$user->profile_image_url}')"))) {
-								echo "<img src='{$user->profile_image_url}' />";
+								echo "<img src='{$user->profile_image_url}' alt='{$user}' />";
 							}
 						$query = $mysqli->query("INSERT INTO {$new_temp_timeline} (user_handle, status_id, date_time, tweet) VALUES ('{$user->screen_name}', '{$status->id}', '{$date_time}', '{$tweet}')");
 							/* FRIENDS WITH NEW UPDATES
@@ -192,7 +192,7 @@
 				//$tweet = $row['tweet'];
 					$last_tweet = twitterify($last_tweet);
 					echo "<div id='default-friends'>";
-					echo "<img src={$user_image} class=user-image />";
+					echo "<img src={$user_image} class=user-image alt='{$user}' />";
 					echo "<div class='user'><a href=http://www.twitter.com/{$user} target=_blank>{$user}</a>";
 					/*$sentiment_score = $row['sentiment_score'];*/
 						if (is_null($sentiment_score)) {
@@ -216,7 +216,7 @@
 
 	<div id="footer">
 		<p class="footer">
-			this web application uses the <a href="http://www.twitter.com" target="_blank">Twitter</a> API + <a href="http://www.alchemyapi.com" target="_blank"><img src="images/alchemy-api.png" alt="Alchemy API logo"/></a> + <a href="http://github.com/abraham/twitteroauth/" target="_blank">twitteroauth PHP library</a> by Abraham Williams</br>
+			this web application uses the <a href="http://www.twitter.com" target="_blank">Twitter</a> API + <a href="http://www.alchemyapi.com" target="_blank"><img src="images/alchemy-api.png" alt="Alchemy API logo"/></a> + <a href="http://github.com/abraham/twitteroauth/" target="_blank">twitteroauth PHP library</a> by Abraham Williams<br />
 			for more info: contact <a href="mailto:bgteruel@gmail.com">bgteruel[at]gmail[dot]com</a>
 		</p>
 	</div>

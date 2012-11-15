@@ -60,20 +60,20 @@
 		?>
 
 		<p class="welcome">
-		<img src="images/positive.png" id="happy" />
-		<img src="images/negative.png" id="sad" /><br />
-		They say,</br>
-		"happiness is contagious”</br>
-		“birds of a feather flock together”</br>
-		and...</br>
-		“misery loves company”</br>
-		so did you ever think your flock</br>
-		was bringing you down or picking you up?</br>
-		Use the Tweet Sentiment Rater App to:</br>
-		* Pick out your friends that tend to</br> 
-		lift up your spirits</br>
-		* Identify friends that could use</br> 
-		a little extra sunshine today</br>
+		<img src="images/positive.png" id="happy" alt="happy icon" />
+		<img src="images/negative.png" id="sad" alt="sad icon" /><br />
+		They say,<br />
+		"happiness is contagious”<br />
+		“birds of a feather flock together”<br />
+		and...<br />
+		“misery loves company”<br />
+		so did you ever think your flock<br />
+		was bringing you down or picking you up?<br />
+		Use the Tweet Sentiment Rater App to:<br />
+		* Pick out your friends that tend to<br /> 
+		lift up your spirits<br />
+		* Identify friends that could use<br /> 
+		a little extra sunshine today<br />
 		</p>
 		<p class="welcome">
 		<a href="login.php" class="button">Login or Sign up with Twitter now</a>
@@ -86,7 +86,7 @@
 
 	<div id="footer">
 		<p class="footer">
-			this web application uses the <a href="http://www.twitter.com" target="_blank">Twitter</a> API + <a href="http://www.alchemyapi.com" target="_blank"><img src="images/alchemy-api.png" alt="Alchemy API logo"/></a> + <a href="http://github.com/abraham/twitteroauth/" target="_blank">twitteroauth PHP library</a> by Abraham Williams</br>
+			this web application uses the <a href="http://www.twitter.com" target="_blank">Twitter</a> API + <a href="http://www.alchemyapi.com" target="_blank"><img src="images/alchemy-api.png" alt="Alchemy API logo"/></a> + <a href="http://github.com/abraham/twitteroauth/" target="_blank">twitteroauth PHP library</a> by Abraham Williams<br />
 			for more info: contact <a href="mailto:bgteruel@gmail.com">bgteruel[at]gmail[dot]com</a>
 		</p>
 	</div>

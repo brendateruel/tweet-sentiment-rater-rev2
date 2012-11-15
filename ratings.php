@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="style.css" media="screen" />
 	<link href='http://fonts.googleapis.com/css?family=Homemade+Apple' rel='stylesheet' type='text/css'>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-	<title>Welcome - Tweet Sentiment Rater</title>
+	<title>View Your Friends' Sentiment Ratings - Tweet Sentiment Rater</title>
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 		echo "<div id='user-login'>";
 		if(!empty($_SESSION['username'])){  
 			echo "<div id=menu>";
-			echo "{$session_username}<img src=images/arrow-down-white.gif />";
+			echo "{$session_username}<img src=images/arrow-down-white.gif alt='arrow down' />";
 			echo "<div class=logout><a href=logout.php>Log Out</a></div>";
 			echo "</div>";
 			} else {
@@ -66,7 +66,7 @@
 	
 	<div id="nav">
 		<div id="button">
-			<img src="images/ajax-loader.gif" class="loading" />
+			<img src="images/ajax-loader.gif" class="loading" alt="loading icon" />
 			<a href="sentiment-analysis.php" class="button">Do it again!</a>
 			<script>
 				$(".button").click(function() {
@@ -180,7 +180,7 @@
 				</li>
 				<li class="negative">
 					<div id="rating">
-						<img src="images/negative.png" />
+						<img src="images/negative.png" alt="sad icon" />
 						<?php
 							$neg = $mysqli->query("SELECT {$new_friends_table}.avg_sentiment_rating FROM {$new_friends_table} WHERE {$new_friends_table}.avg_sentiment_rating < 0");
 							print_r($neg->num_rows);
@@ -189,7 +189,7 @@
 				</li>
 				<li class="neutral">
 					<div id="rating">
-						<img src="images/neutral.png" />
+						<img src="images/neutral.png" alt="neutral icon" />
 						<?php
 							$nil = $mysqli->query("SELECT {$new_friends_table}.avg_sentiment_rating FROM {$new_friends_table} WHERE {$new_friends_table}.avg_sentiment_rating = 0");
 							print_r($nil->num_rows);
@@ -198,7 +198,7 @@
 				</li>
 				<li class="positive">
 					<div id="rating">
-						<img src="images/positive.png" />
+						<img src="images/positive.png" alt="happy icon" />
 						<?php
 							$pos = $mysqli->query("SELECT {$new_friends_table}.avg_sentiment_rating FROM {$new_friends_table} WHERE {$new_friends_table}.avg_sentiment_rating > 0");
 							print_r($pos->num_rows);
@@ -269,12 +269,12 @@
 						}
 			echo "<div id='default-friends' class='{$mood_bg}'>";
 				if(is_null($avg_sentiment_rating)) {
-					echo "<div id='rating'><img src=images/{$mood_bg}.png />0%</div>";
+					echo "<div id='rating'><img src=images/{$mood_bg}.png alt='{$mood_bg} icon' />0%</div>";
 					} else {
 						$percent = $avg_sentiment_rating * 100;
-						echo "<div id='rating'><img src=images/{$mood_bg}.png />{$percent}%</div>";
+						echo "<div id='rating'><img src=images/{$mood_bg}.png alt='{$mood_bg} icon' />{$percent}%</div>";
 						}
-				echo "<a href=http://www.twitter.com/{$user} target=_blank><img src={$user_image} class=user-image /></a>";
+				echo "<a href=http://www.twitter.com/{$user} target=_blank><img src={$user_image} class=user-image alt='{$user}' /></a>";
 				echo "<div class='user'><a href=http://www.twitter.com/{$user} target=_blank>{$user}</a></div>";
 				//echo $row['date_time'];
 				$last_tweet = twitterify($last_tweet);
@@ -295,7 +295,7 @@
 
 	<div id="footer">
 		<p class="footer">
-			this web application uses the <a href="http://www.twitter.com" target="_blank">Twitter</a> API + <a href="http://www.alchemyapi.com" target="_blank"><img src="images/alchemy-api.png" alt="Alchemy API logo"/></a> + <a href="http://github.com/abraham/twitteroauth/" target="_blank">twitteroauth PHP library</a> by Abraham Williams</br>
+			this web application uses the <a href="http://www.twitter.com" target="_blank">Twitter</a> API + <a href="http://www.alchemyapi.com" target="_blank"><img src="images/alchemy-api.png" alt="Alchemy API logo"/></a> + <a href="http://github.com/abraham/twitteroauth/" target="_blank">twitteroauth PHP library</a> by Abraham Williams<br />
 			for more info: contact <a href="mailto:bgteruel@gmail.com">bgteruel[at]gmail[dot]com</a>
 		</p>
 	</div>
