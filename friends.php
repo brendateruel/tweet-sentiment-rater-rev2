@@ -36,8 +36,8 @@
 			echo "<div class=logout><a href=logout.php>Log Out</a></div>";
 			echo "</div>";
 			} else {
-					//header('Location: welcome.php'); 
-					echo "<a href=login.php class=button>Sign in</a>";
+					header('Location: welcome.php'); 
+					//echo "<a href=login.php class=button>Sign in</a>";
 					//header('Location: login.php');
 				}
 		echo "</div>";

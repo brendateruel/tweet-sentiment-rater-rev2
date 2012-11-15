@@ -30,7 +30,7 @@
 		echo "<div class=logo>happy meter</div>";
 		echo "<div id='user-login'>";
 		if(!empty($_SESSION['username'])){  
-			echo "Welcome, {$session_username}!";
+			echo "Welcome back, {$session_username}!";
 			} else {
 					//header('Location: welcome.php'); 
 					echo "<a href=login.php class=button>Sign in</a>";

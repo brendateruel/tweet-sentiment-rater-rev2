@@ -36,7 +36,7 @@
 				} else {
 						//header('Location: welcome.php'); 
 						//echo "<a href=login.php>Sign in</a>";
-						header('Location: login.php');
+						header('Location: welcome.php');
 					}
 					
 				/*Alchemy API SDK*/ 
