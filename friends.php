@@ -216,7 +216,8 @@
 
 	<div id="footer">
 		<p class="footer">
-			credit Alchemy API + other libraries... contact bgteruel[at]gmail[dot]com
+			this web application uses the <a href="http://www.twitter.com" target="_blank">Twitter</a> API + <a href="http://www.alchemyapi.com" target="_blank"><img src="images/alchemy-api.png" alt="Alchemy API logo"/></a> + <a href="http://github.com/abraham/twitteroauth/" target="_blank">twitteroauth PHP library</a> by Abraham Williams</br>
+			for more info: contact <a href="mailto:bgteruel@gmail.com">bgteruel[at]gmail[dot]com</a>
 		</p>
 	</div>
 	<!-- end #footer -->

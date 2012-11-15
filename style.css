@@ -360,6 +360,16 @@ img {
 	color: #f1f1f1;
 }
 
+.footer a {
+	text-decoration: none;
+}
+
+.footer img {
+	vertical-align: middle;
+	width: 130px;
+	height: 30px;
+}
+
 .goodbye {
 	font-family: 'Homemade Apple', Comic Sans MS;
 	font-size: 2em;
