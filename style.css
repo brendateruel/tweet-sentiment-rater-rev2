@@ -43,7 +43,7 @@ img {
 	float: left;
 }
 
-#header #user-login, #content #user-login {
+#header #user-login {
 	position: relative;
 	float: right;
 	top: 30px;
@@ -54,6 +54,14 @@ img {
 #header #user-login img {
 	position: relative;
 	top: 5px;
+}
+
+#content #user-login {
+	position: relative;
+	float: right;
+	top: -260px;
+	right: 20px;
+	padding: 7px;
 }
 
 .login, #header #user-login #menu:hover {
@@ -191,11 +199,14 @@ img {
 
 #default-friends-subhead {
 	padding: 5px 10px 5px 10px;
-	font-family: 'Homemade Apple', Comic Sans MS;
 	color: #00aced;
 	text-transform: capitalize;
 	background-color: #dbdbdb;
 	border-top: 15px solid #00aced;
+}
+
+#default-friends-subhead h2 {
+	font-family: 'Homemade Apple', Comic Sans MS;
 }
 
 #sort-bar {
@@ -210,11 +221,41 @@ img {
 	top: 5px;
 }
 
+#count {
+	position: relative;
+	margin-right: 15px;
+}
+
+#count p {
+	padding-top: 20px;
+}
+
+#count li {
+	list-style-type: none;
+	position: relative;
+	float: right;
+	padding-left: 50px;
+}
+
+#count li img {
+	float: left;
+}
+
+#count .total {
+	text-transform: lowercase;
+	color: #7b7b7b;
+	font-weight: bold;
+}
+
+#count .neutral img, #count .negative img {
+	padding-top: 10px;
+}
+
 #default-friends.negative {
 	background-color: #cddadf;
 }
 
-#default-friends.negative #rating {
+.negative #rating {
 	color: #00aced;
 	font-weight: bold;
 }
@@ -227,7 +268,7 @@ img {
 	background-color: #aedd9b;
 }
 
-#default-friends.positive #rating {
+.positive #rating {
 	color: #3dc905;
 	font-weight: bold;
 }
@@ -240,7 +281,7 @@ img {
 	background-color: #ebd6a8;
 }
 
-#default-friends.neutral #rating {
+.neutral #rating {
 	color: #ffe787;
 	font-weight: bold;
 }

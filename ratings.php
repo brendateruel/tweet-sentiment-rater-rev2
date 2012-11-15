@@ -157,7 +157,9 @@
 		?>
 
 		<!-- SHOW FRIENDS WITH SENTIMENT RATINGS -->
-			<div id="sort-bar">
+
+		<!-- SELECT DISPLAY ORDER -->
+		<div id="sort-bar">
 			<select id="sort" 
 				name="sort"
 				onchange="window.location='?sort='+this.value;">
@@ -165,11 +167,45 @@
 						  <option value='rating-desc' <?php if(isset($_GET['sort']) && $_GET['sort']=='rating-desc'){$_GET['sort'] = 'avg_sentiment_rating DESC'; echo "selected";} ?>>Rating - High to Low</option>
 						  <option value='rating-asc' <?php if(isset($_GET['sort']) && $_GET['sort']=='rating-asc'){$_GET['sort'] = 'avg_sentiment_rating ASC'; echo "selected";} ?>>Rating - Low to High</option>
 			</select>
-			</div>
+		</div>
+
 		<div id="default-friends-subhead">
-
-		<!-- SELECT DISPLAY ORDER -->
-
+			<ul id="count">
+				<li class="total">
+					<?php
+						$total = $mysqli->query("SELECT COUNT(*) AS total FROM {$new_friends_table}");
+						$count = $total->fetch_assoc();
+						echo "of " . $count['total'];
+					?>
+				</li>
+				<li class="negative">
+					<div id="rating">
+						<img src="images/negative.png" />
+						<?php
+							$neg = $mysqli->query("SELECT {$new_friends_table}.avg_sentiment_rating FROM {$new_friends_table} WHERE {$new_friends_table}.avg_sentiment_rating < 0");
+							print_r($neg->num_rows);
+						?>
+					</div>
+				</li>
+				<li class="neutral">
+					<div id="rating">
+						<img src="images/neutral.png" />
+						<?php
+							$nil = $mysqli->query("SELECT {$new_friends_table}.avg_sentiment_rating FROM {$new_friends_table} WHERE {$new_friends_table}.avg_sentiment_rating = 0");
+							print_r($nil->num_rows);
+						?>
+					</div>
+				</li>
+				<li class="positive">
+					<div id="rating">
+						<img src="images/positive.png" />
+						<?php
+							$pos = $mysqli->query("SELECT {$new_friends_table}.avg_sentiment_rating FROM {$new_friends_table} WHERE {$new_friends_table}.avg_sentiment_rating > 0");
+							print_r($pos->num_rows);
+						?>
+					</div>
+				</li>
+			</ul>
 			<h2>Friends</h2>
 		</div>
 		
