@@ -46,7 +46,7 @@ img {
 #header #user-login {
 	position: relative;
 	float: right;
-	top: 30px;
+	top: 15px;
 	right: 20px;
 	padding: 7px;
 }
@@ -114,6 +114,20 @@ img {
 	background-color: #f1f1f1;
 }
 
+.still-loading {
+	top: 5px;
+	background-color: #f1f1f1;
+	text-align: center;
+	color: #8e8e8e;
+	line-height: 2em;
+	padding: 2em;
+}
+
+.still-loading img {
+	height: 40px;
+	width: 40px;
+	margin: 20px;
+}
 
 .button {
 	background-color: #00aced;
