@@ -48,7 +48,8 @@ if(isset($user_info->error)){
 
 if(!empty($_SESSION['username'])){  
 	// User is logged in, redirect  
-	header('Location: friends.php');
+	//header('Location: friends.php');
+	printf("<script>location.href='friends.php'</script>");
 }	
  
 
