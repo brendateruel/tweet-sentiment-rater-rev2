@@ -702,7 +702,7 @@ class AlchemyAPI
 			{
 				$statusInfo = $doc->xpath("/results/statusInfo");
 				if($statusInfo[0] == "unsupported-text-language") {
-					echo "too little text. cannot analyze. let's move on";
+					echo "note: some text may be too short to analyze. if that's the case, we'll just mark neutral and move on.";
 				} else {
 					throw new Exception("Error making API call: $statusInfo[0]");
 					}
