@@ -24,16 +24,16 @@
 		/* Updating user's friends and timeline tables */
 			$new_friends_table = "friends_" . $session_username;
 			$new_temp_timeline = "temp_timeline_" . $session_username; 
-			$home_timeline = $twitteroauth->get('statuses/home_timeline', array('count' => 500));
+			$home_timeline = $twitteroauth->get('statuses/home_timeline', array('count' => 200));
 		}
 
-		echo "<div class=logo>happy meter</div>";
+		echo "<div class='logo'>happy meter</div>";
 		echo "<div id='user-login'>";
 		if(!empty($_SESSION['username'])){  
 			echo "Welcome back, {$session_username}!";
 			} else {
 					//header('Location: welcome.php'); 
-					echo "<a href=login.php class=button>Sign in</a>";
+					echo "<a href='login.php' class='button'>Sign in</a>";
 					//header('Location: login.php');
 				}
 		echo "</div>";

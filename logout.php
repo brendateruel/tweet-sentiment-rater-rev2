@@ -27,7 +27,7 @@
 			$home_timeline = $twitteroauth->get('statuses/home_timeline', array('count' => 500));
 		}
 
-		echo "<div class=logo>happy meter</div>";
+		echo "<div class='logo'>happy meter</div>";
 /*		echo "<div id='user-login'>";
 		if(!empty($_SESSION['username'])){  
 			echo "Welcome, {$session_username}!";
@@ -60,11 +60,11 @@
 			if(!($stmt->execute())) {
 				echo "Execution failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			} else {
-				echo "<div class=goodbye>Goodbye.</div>";
+				echo "<div class='goodbye'>Goodbye.</div>";
 			}
 			$_SESSION = array();
 			session_destroy();
-			echo "<div class=welcome>You've been logged out. Come back soon!</div>";
+			echo "<div class='welcome'>You've been logged out. Come back soon!</div>";
 		} else {
 			header('Location: welcome.php'); 
 			/*if(!($stmt = $mysqli-> prepare("DELETE FROM users WHERE username='{$session_username}'"))) {
@@ -83,7 +83,7 @@
 			echo "Welcome, {$session_username}!";
 			} else {
 					//header('Location: welcome.php'); 
-					echo "<a href=login.php class=button>Sign in</a>";
+					echo "<a href='login.php' class='button'>Sign in</a>";
 					//header('Location: login.php');
 				}
 		echo "</div>";

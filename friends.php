@@ -28,12 +28,12 @@
 			$allfriends = $twitteroauth->get('friends/ids', array('screen_name' => $session_username));
 		}
 
-		echo "<div class=logo>happy meter</div>";
+		echo "<div class='logo'>happy meter</div>";
 		echo "<div id='user-login'>";
 		if(!empty($_SESSION['username'])){  
-			echo "<div id=menu>";
-			echo "{$session_username}<img src=images/arrow-down-white.gif alt='arrow down' />";
-			echo "<div class=logout><a href=logout.php>Log Out</a></div>";
+			echo "<div id='menu'>";
+			echo "{$session_username}<img src='images/arrow-down-white.gif' alt='arrow down' />";
+			echo "<div class='logout'><a href='logout.php'>Log Out</a></div>";
 			echo "</div>";
 			} else {
 					header('Location: welcome.php'); 
@@ -192,11 +192,11 @@
 				//$tweet = $row['tweet'];
 					$last_tweet = twitterify($last_tweet);
 					echo "<div id='default-friends'>";
-					echo "<img src={$user_image} class=user-image alt='{$user}' />";
-					echo "<div class='user'><a href=http://www.twitter.com/{$user} target=_blank>{$user}</a>";
+					echo "<img src='{$user_image}' class='user-image' alt='{$user}' />";
+					echo "<div class='user'><a href='http://www.twitter.com/{$user}' target='_blank'>{$user}</a>";
 					/*$sentiment_score = $row['sentiment_score'];*/
 						if (is_null($sentiment_score)) {
-						echo "<span class=new-marker>new update!</span>";
+						echo "<span class='new-marker'>new update!</span>";
 						}
 					echo "</div>";
 					if(strtotime($last_update) >= strtotime('now -24 hours')) {

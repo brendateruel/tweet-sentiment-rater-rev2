@@ -29,9 +29,9 @@
 
 		echo "<div id='user-login'>";
 		if(!empty($_SESSION['username'])){  
-			echo "<div id=menu>";
-			echo "{$session_username}<img src=images/arrow-down-white.gif alt='arrow down' />";
-			echo "<div class=logout><a href=logout.php>Log Out</a></div>";
+			echo "<div id='menu'>";
+			echo "{$session_username}<img src='images/arrow-down-white.gif' alt='arrow down' />";
+			echo "<div class='logout'><a href='logout.php'>Log Out</a></div>";
 			echo "</div>";
 			} else {
 					header('Location: welcome.php'); 
@@ -269,13 +269,13 @@
 						}
 			echo "<div id='default-friends' class='{$mood_bg}'>";
 				if(is_null($avg_sentiment_rating)) {
-					echo "<div id='rating'><img src=images/{$mood_bg}.png alt='{$mood_bg} icon' />0%</div>";
+					echo "<div id='rating'><img src='images/{$mood_bg}.png' alt='{$mood_bg} icon' />0%</div>";
 					} else {
 						$percent = $avg_sentiment_rating * 100;
-						echo "<div id='rating'><img src=images/{$mood_bg}.png alt='{$mood_bg} icon' />{$percent}%</div>";
+						echo "<div id='rating'><img src='images/{$mood_bg}.png' alt='{$mood_bg} icon' />{$percent}%</div>";
 						}
-				echo "<a href=http://www.twitter.com/{$user} target=_blank><img src={$user_image} class=user-image alt='{$user}' /></a>";
-				echo "<div class='user'><a href=http://www.twitter.com/{$user} target=_blank>{$user}</a></div>";
+				echo "<a href='http://www.twitter.com/{$user}' target='_blank'><img src='{$user_image}' class='user-image' alt='{$user}' /></a>";
+				echo "<div class='user'><a href='http://www.twitter.com/{$user}' target='_blank'>{$user}</a></div>";
 				//echo $row['date_time'];
 				$last_tweet = twitterify($last_tweet);
 				if(strtotime($row['last_update']) >= strtotime('now -24 hours')) {

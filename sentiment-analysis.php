@@ -28,7 +28,7 @@
 				$home_timeline = $twitteroauth->get('statuses/home_timeline', array('count' => 500));
 			}
 			
-			echo "<div class=logo>happy meter</div>";
+			echo "<div class='logo'>happy meter</div>";
 
 
 			if(!empty($_SESSION['username'])){  
